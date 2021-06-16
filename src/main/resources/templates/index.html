@@ -1,56 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <title>Mi & Ci</title>
-        <link rel="stylesheet" th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.css}">
-        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-        <link rel="stylesheet" th:href="@{/css/main.css}">
-    </head>
-    <body>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
-        <div class="container">
-            <a th:href="@{/}" class="navbar-brand">Mi & Ci</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item pe-3">
-                        <a th:href="@{/agenda/}" class="nav-link">
-                            <i class="fa fa-calendar"></i> Agenda
-                        </a>
-                    </li>
-                    <li class="nav-item pe-3">
-                        <a href="#" class="nav-link">
-                            <i class="fa fa-address-book"></i> Atendimentos
-                        </a>
-                    </li>
-                    <li class="nav-item pe-3">
-                        <a href="#" class="nav-link">
-                            <i class="fa fa-user"></i> Clientes
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown pe-5">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="fa fa-briefcase"></i> Serviços
-                        </a>
-                        <div class="dropdown-menu">
-                            <a href="cadastrar_servico.html" class="dropdown-item">
-                                <i class="fa fa-pencil"></i> Cadastrar Serviço
-                            </a>
-                            <a href="servicos.html" class="dropdown-item">
-                                <i class="fa fa-search"></i> Consultar Serviços
-                            </a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link"><i class="fa fa-sign-out"></i> Sair</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<title th:text="#{application.messages.title}">Mi & Ci</title>
+	<link rel="stylesheet" th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.css}">
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+   <body>
+    <nav th:replace="fragments/top_menu :: top_menu"></nav>
+    
     <header id="main-header" class="py-4 mici-bgcolor text-black">
         <div class="container">
             <div class="row">
@@ -60,7 +19,9 @@
             </div>
         </div>
     </header>
+    
+    <section th:replace="fragments/footer :: footer"></section>
 
-        <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
-    </body>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+   </body>
 </html>
