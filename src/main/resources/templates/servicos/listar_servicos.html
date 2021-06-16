@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <title th:text="#{application.messages.title}">Mi & Ci</title>
+        <link rel="stylesheet" th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.css}">
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+        <link rel="stylesheet" th:href="@{/css/CalendarPicker.style.css}">
+        <link rel="stylesheet" href='/css/main.css'>
+    </head>
+    <body>
+    <nav th:replace="fragments/top_menu :: top_menu"></nav>
+
+    <header id="main-header" class="py-4 mici-bgcolor text-black">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4><i class="fa fa-calendar"></i> Serviços</h4>
+                </div>
+            </div>
+        </div>
+    </header>
+	
+		<div class="container" th:if="${mensagemSucesso} != null">
+			<div class="alert alert-success alert-dismissible fade show" role="alert" th:text="${mensagemSucesso}">
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		</div>
+		
+	    <section id="posts" class="mt-2">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                	<div class="alert alert-secondary" role="alert" th:if="${#lists.isEmpty(servicos)}">Ainda não há serviços cadastrados.</div>
+                    <table class="table table-striped table-hover align-middle" th:if="${not #lists.isEmpty(servicos)}">
+                        <thead>
+                            <tr>
+                                <th>Serviço</th>
+                                <th>Preço</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="servico : ${servicos}">
+                                <td th:text="${servico.nome}"></td>
+                                <td th:text="${#numbers.formatCurrency(servico.preco)}"></td>
+                                <td class='text-end'>
+                                    <a th:href="@{'/servicos/editar/' + ${servico.id}}" class="btn btn-primary">
+                                        <i class="fa fa-edit"></i> Editar
+                                    </a>
+                   	             	<a th:href="@{'/servicos/remover/' + ${servico.id}}" class="btn btn-danger ms-1" onclick="return confirm('Tem certeza que deseja remover?')">
+                                        <i class="fa fa-trash"></i> Remover
+                                    </a>                                    
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+         </div>
+
+    </section>
+
+    <section th:replace="fragments/footer :: footer"></section>
+    
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    </body>
+</html>
