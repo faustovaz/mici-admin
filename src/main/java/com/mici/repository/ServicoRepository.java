@@ -1,4 +1,4 @@
-package com.mici.service.repository;
+package com.mici.repository;
 
 import java.util.List;
 

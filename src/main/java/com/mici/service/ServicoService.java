@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.mici.entity.Servico;
-import com.mici.service.repository.ServicoRepository;
+import com.mici.repository.ServicoRepository;
 
 @Service
 public class ServicoService {
