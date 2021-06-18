@@ -1,11 +1,14 @@
 package com.mici.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mici.entity.Cliente;
 import com.mici.service.ClienteService;
@@ -30,7 +33,7 @@ public class ClientesController {
 	
 	@PostMapping("cadastrar")
 	public String cadastrarServico(Cliente cliente, Model model) {
-		this.service.salvar(cliente);
+		this.service.save(cliente);
 		model.addAttribute("mensagemSucesso", "Cliente salvo com sucesso!");
 		model.addAttribute("clientes", this.service.findAll());
 		return "clientes/listar_clientes";
@@ -47,6 +50,15 @@ public class ClientesController {
 	@GetMapping("listar")
 	public String listarClientes(Model model) { 
 		model.addAttribute("clientes", this.service.findAll());
+		model.addAttribute("termo_busca", "");
+		return "clientes/listar_clientes";
+	}
+	
+	@GetMapping("buscar")
+	public String buscarCliente(@RequestParam("termo") String busca, Model model) {
+		List<Cliente> clientes = this.service.findByName(busca);
+		model.addAttribute("clientes", clientes);
+		model.addAttribute("termo_busca", busca);
 		return "clientes/listar_clientes";
 	}
 }
