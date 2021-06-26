@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <title th:text="#{application.messages.title}"></title>
+        <link rel="stylesheet" th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.css}">
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+        <link rel="stylesheet" th:href="@{/css/main.css}">
+    </head>
+    <body>
+    
+	<div class="modal fade" id="schedule-date-modal" th:fragment="modal-date-scheduler" aria-labelledby="scheduleDateLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-scrollable">
+			<div class="modal-content">
+				<h5 class="modal-title" id="modal-title-id">
+					<button class="btn-close" type="button" data-bs-dismiss="modal"></button>
+				</h5>
+			</div>
+			<div class="modal-body">
+				<div class="container">
+					<div class="row mt-2">
+						<div class="col-6">
+							<label for="cliente" class="form-label">Cliente</label>
+							<input type="text" name="cliente" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" data-bs-dismiss="modal">
+					Fechar
+				</button>
+			</div>
+		</div>
+	</div>
+    
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    </body>
+</html>
+

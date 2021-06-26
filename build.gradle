@@ -29,6 +29,7 @@ dependencies {
 	compileOnly 'org.webjars:font-awesome:4.7.0'
 	
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation group: 'com.github.javafaker', name: 'javafaker', version: '1.0.2'
 	testCompileOnly 'org.projectlombok:lombok:1.18.20'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
 }

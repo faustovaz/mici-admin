@@ -4,9 +4,9 @@
         <meta charset="utf-8">
         <title th:text="#{application.messages.title}">Mi & Ci</title>
         <link rel="stylesheet" th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.css}">
-        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
         <link rel="stylesheet" th:href="@{/css/CalendarPicker.style.css}">
         <link rel="stylesheet" href='/css/main.css'>
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
     </head>
     <body>
     <nav th:replace="fragments/top_menu :: top_menu"></nav>
@@ -31,7 +31,48 @@
 
     <section th:replace="fragments/footer :: footer"></section>
     
+	<div class="modal fade" id="schedule-date-modal" th:fragment="modal-date-scheduler" aria-labelledby="scheduleDateLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modal-title-id"></h5>
+					<button class="btn-close" type="button" data-bs-dismiss="modal"></button>
+				</div>
+				<div class="modal-body">
+					<div class="container">
+						<div class="row mt-2">
+							<div class="col-6">
+								<label for="cliente" class="form-label">Cliente</label>
+								<input type="text" name="cliente" id="cliente" class="form-control">
+							</div>
+							<div class="col-3">
+								<label for="horario" class="form-label">Horário</label>
+								<input type="time" name="horario" id="horario" class="form-control">
+							</div>
+						</div>
+						<div class="row mt-2">
+							<div class="col-9">
+								<label for="lembrete" class="form-label">Lembrete</label>
+								<input type="text" name="lembrete" id="lembrete" class="form-control">
+							</div>
+							<div class="col-3 d-flex align-items-end">
+								<button class="btn btn-success" id="btn-agendar" title="Fazer o agendamento">
+									<i class="fa fa-check"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" data-bs-dismiss="modal">
+						Fechar
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+    
     <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
-    <script th:src="@{/js/main.js}" charset="utf-8" type="module"></script>
+    <script th:src="@{/js/mici-agenda.js}" charset="utf-8" type="module"></script>
     </body>
 </html>
