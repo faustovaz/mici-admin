@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.mici.entity.Agendamento;
@@ -26,8 +27,15 @@ public class AgendamentoService {
 	public List<Agendamento> getTodosDoDia(LocalDate date) {
 		var startDate = LocalDateTime.of(date, LocalTime.MIN);
 		var endDate = LocalDateTime.of(date, LocalTime.MAX);
-		return this.repository.findByDataHoraAgendamentoBetween(startDate, endDate);
+		return this.repository.findByAgendamentoBetween(startDate, endDate, Sort.by(Sort.Direction.ASC, "agendamento"));
+	}
+
+	public List<Agendamento> findAll() {
+		return this.repository.findAll();
+	}
+
+	public void deleteById(Integer id) {
+		this.repository.deleteById(id);
 	}
 	
-
 }

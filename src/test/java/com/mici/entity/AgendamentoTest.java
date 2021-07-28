@@ -16,8 +16,8 @@ class AgendamentoTest {
 	void deveCriarAgendamentosAPartirDeStrings() {
 		var agendamento = Agendamento.from("Fausto", "Procedimento padrão", "2021-06-25", "14:00");
 		assertThat(agendamento).isNotNull();
-		assertThat(agendamento.getDataHoraAgendamento()).isNotNull();
-		assertThat(agendamento.getDataHoraAgendamento()).isEqualTo(LocalDateTime.parse("2021-06-25T14:00"));
+		assertThat(agendamento.getAgendamento()).isNotNull();
+		assertThat(agendamento.getAgendamento()).isEqualTo(LocalDateTime.parse("2021-06-25T14:00"));
 	}
 	
 	@Test

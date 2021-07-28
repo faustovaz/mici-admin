@@ -24,55 +24,70 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                    <div id="calendarWrapper" class="my-3"></div>
+                    <div id="calendar-wrapper" class="my-3"></div>
             </div>
         </div>
     </div>
 
     <section th:replace="fragments/footer :: footer"></section>
     
-	<div class="modal fade" id="schedule-date-modal" th:fragment="modal-date-scheduler" aria-labelledby="scheduleDateLabel" aria-hidden="true">
+    <div class="modal fade" id="schedule-date-modal" th:fragment="modal-date-scheduler" aria-labelledby="scheduleDateLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-scrollable">
-			<div class="modal-content">
+  			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="modal-title-id"></h5>
-					<button class="btn-close" type="button" data-bs-dismiss="modal"></button>
-				</div>
-				<div class="modal-body">
-					<div class="container">
-						<div class="row mt-2">
-							<div class="col-6">
-								<label for="cliente" class="form-label">Cliente</label>
-								<input type="text" name="cliente" id="cliente" class="form-control">
-							</div>
-							<div class="col-3">
-								<label for="horario" class="form-label">Horário</label>
-								<input type="time" name="horario" id="horario" class="form-control">
-							</div>
-						</div>
-						<div class="row mt-2">
-							<div class="col-9">
-								<label for="lembrete" class="form-label">Lembrete</label>
-								<input type="text" name="lembrete" id="lembrete" class="form-control">
-							</div>
-							<div class="col-3 d-flex align-items-end">
-								<button class="btn btn-success" id="btn-agendar" title="Fazer o agendamento">
-									<i class="fa fa-check"></i>
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button class="btn btn-secondary" data-bs-dismiss="modal">
-						Fechar
-					</button>
-				</div>
-			</div>
-		</div>
-	</div>
-    
+  					<h5 class="modal-title" id="modal-title-id"></h5>
+  					<button class="btn-close" type="button" data-bs-dismiss="modal"></button>
+  				</div>
+  				<div class="modal-body">
+            		<div class="alert alert-danger d-none" role="alert" id="modalErrorMsg"></div>
+           			<div class="alert alert-success d-none" role="alert" id="modalSuccessMsg"></div>
+  					<div class="container">
+  						<div class="row mt-2">
+  							<div class="col-6">
+  								<label for="cliente" class="form-label">Cliente</label>
+  								<input type="text" name="cliente" id="cliente" class="form-control">
+  							</div>
+  							<div class="col-6">
+  								<label for="horario" class="form-label">Horário</label>
+  								<input type="time" name="horario" id="horario" class="form-control">
+  							</div>
+  						</div>
+  						<div class="row mt-2">
+  							<div class="col-9">
+  								<label for="lembrete" class="form-label">Lembrete</label>
+  								<input type="text" name="lembrete" id="lembrete" class="form-control">
+  							</div>
+  							<div class="col-3 d-flex align-items-end">
+  								<button class="btn btn-success" id="btn-agendar" title="Fazer o agendamento">
+  									<i class="fa fa-check"></i>
+  								</button>
+  							</div>
+  						</div>
+  					</div>
+            		<div class="container">
+		              <table class="table table-striped mt-4 d-none" id="tbScheduledDates">
+		                <thead>
+		                  <tr>
+		                    <th>Cliente</th>
+		                    <th>Horário</th>
+		                    <th></th>
+		                  </tr>
+		                </thead>
+		                <tbody>
+		                </tbody>
+		              </table>
+		            </div>
+  				</div>
+  				<div class="modal-footer">
+  					<button class="btn btn-secondary" data-bs-dismiss="modal">
+  						Fechar
+  					</button>
+  				</div>
+  			</div>
+  		</div>
+  	</div> 
     <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
-    <script th:src="@{/js/mici-agenda.js}" charset="utf-8" type="module"></script>
+    <!-- <script th:src="@{/webjars/font-awesome/4.7.0/js/font-awesome.js}"></script> -->
+    <script th:src="@{/js/CalendarManager.js}" charset="utf-8" type="module"></script>
     </body>
 </html>

@@ -4,8 +4,8 @@ export class CalendarTTS {
         this.element = element;
         this.options = options;
         this.scheduledDays = this.options.scheduledDays;
-        this.currentDate = this._setHoursToZero(new Date())
-        this.today = this._setHoursToZero(new Date())
+        this.currentDate = this._setHoursToZero(new Date());
+        this.today = this._setHoursToZero(new Date());
         this.currentDay = this.currentDate.getDay();
         this.currentMonth = this.currentDate.getMonth();
         this.currentYear = this.currentDate.getFullYear();
@@ -52,7 +52,7 @@ export class CalendarTTS {
 
 
     insertHeaderIntoCalendarWrapper() {
-        let month = this.getListOfMonthsAsText()[this.currentMonth]
+        let month = this.getListOfMonthsAsText()[this.currentMonth];
         this.calendarHeaderTitle.textContent = `${month} - ${this.currentYear}`;
         this.calendarHeader.appendChild(this.calendarHeaderTitle);
         this.calendarWrapper.appendChild(this.calendarHeader);
@@ -74,17 +74,19 @@ export class CalendarTTS {
 
     insertDaysIntoGrid() {
         this.calendarGrid.innerHTML = '';
-        let arrayOfDays = this.getDaysInMonth(this.currentMonth, this.currentYear);
+        let arrayOfDays = this.getDaysInMonth(
+                                  this.currentMonth, this.currentYear);
 
-        if (arrayOfDays[0].getDay() > 0) {// Fill array in the left with false value
+        if (arrayOfDays[0].getDay() > 0) {
+            // Fill array in the left with false value
             arrayOfDays = Array(arrayOfDays[0].getDay())
-                                                .fill(false, 0)
-                                                .concat(arrayOfDays);
+                          .fill(false, 0)
+                          .concat(arrayOfDays);
         }
 
         arrayOfDays.forEach(dayDate => {
             let dateElement = document.createElement(
-                                                    dayDate ? this.calendarDayElementType : 'span');
+                                dayDate ? this.calendarDayElementType : 'span');
             // Mark today's day as selected
             if(dayDate && dayDate.getTime() === this.today.getTime()) {
                 this.activeElement = dateElement;
@@ -92,10 +94,10 @@ export class CalendarTTS {
             }
 
             if (dayDate && this.scheduledDays){
-                    let scheduledTimes = this.scheduledDays.map(d => d.getTime());
-                    if (scheduledTimes.includes(dayDate.getTime())) {
-                        dateElement.classList.add('scheduled');
-                    }
+                let scheduledTimes = this.scheduledDays.map(d => d.getTime());
+                if (scheduledTimes.includes(dayDate.getTime())) {
+                    dateElement.classList.add('scheduled');
+                }
             }
 
             dateElement.tabIndex = 0;
@@ -112,9 +114,9 @@ export class CalendarTTS {
 
     insertNavigationButton() {
         var arrowSvg = "<svg enable-background='new 0 0 386.257 386.257' \
-                                                viewBox='0 0 386.257 386.257' \
-                                                 xmlns='http://www.w3.org/2000/svg'> \
-                                                 <path d='m0 96.879 193.129 192.5 193.128-192.5z'/></svg>";
+                                            viewBox='0 0 386.257 386.257' \
+                                       xmlns='http://www.w3.org/2000/svg'> \
+                   <path d='m0 96.879 193.129 192.5 193.128-192.5z'/></svg>";
 
         this.previousMonthArrow.innerHTML = arrowSvg;
         this.nextMonthArrow.innerHTML = arrowSvg;
@@ -166,7 +168,7 @@ export class CalendarTTS {
 
     setDatesAsScheduled(dates) {
         if (!dates) return;
-        this.scheduledDays = dates;
+        this.scheduledDays = dates.map(d => this._setHoursToZero(d));
         this.updateCalendar();
     }
 
@@ -188,7 +190,7 @@ export class CalendarTTS {
         this.calendarWrapper.appendChild(this.calendarElement);
 
         this.calendarGrid.addEventListener('click', (evt) => {
-            let allSelected = Array.from(document.querySelectorAll('.selected'))
+            let allSelected = Array.from(document.querySelectorAll('.selected'));
             allSelected.forEach(e => e.classList.remove('selected'));
             evt.target.classList.add('selected');
             this.selectedValue = evt.target.value;
@@ -200,7 +202,7 @@ export class CalendarTTS {
 
     onValueChange(callback) {
         if (this.callback)
-            return this.callback(this.selectedValue)
+            return this.callback(this.selectedValue);
         this.callback = callback;
     }
 

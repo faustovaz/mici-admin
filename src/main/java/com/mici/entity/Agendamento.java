@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -26,30 +28,32 @@ public class Agendamento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@NotEmpty
 	private String cliente;
 	
 	private String lembrete;
 	
+	@NotNull
 	@Convert(converter = SQLiteLocalDateTimeConverter.class)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "data_agendamento")
-	private LocalDateTime dataHoraAgendamento;
+	private LocalDateTime agendamento;
 	
 	public static Agendamento from(String cliente, String lembrete, String date, String time) {
 		var dataAgendamento = LocalDateTime.parse(String.format("%sT%s", date, time));
-		var agendamento = new Agendamento();
-		agendamento.setCliente(cliente);
-		agendamento.setLembrete(lembrete);
-		agendamento.setDataHoraAgendamento(dataAgendamento);
-		return agendamento;
+		var a = new Agendamento();
+		a.setCliente(cliente);
+		a.setLembrete(lembrete);
+		a.setAgendamento(dataAgendamento);
+		return a;
 	}
 	
 	public String getHora() {
-		return this.dataHoraAgendamento.format(DateTimeFormatter.ISO_TIME);
+		return this.agendamento.format(DateTimeFormatter.ISO_TIME);
 	}
 	
 	public String getData() {
-		return this.dataHoraAgendamento.format(DateTimeFormatter.ISO_LOCAL_DATE);
+		return this.agendamento.format(DateTimeFormatter.ISO_LOCAL_DATE);
 	}
 	
 	
