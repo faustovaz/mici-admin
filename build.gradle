@@ -2,6 +2,8 @@ plugins {
 	id 'org.springframework.boot' version '2.5.1'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'com.adarshr.test-logger' version '2.1.1'
+    id "org.flywaydb.flyway" version "7.11.4"
 }
 
 group = 'com.mici'
@@ -38,3 +40,13 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+
+task migrateSqlite(type: org.flywaydb.gradle.task.FlywayMigrateTask) {
+    url = "jdbc:sqlite:$projectDir/mici-admin-tests.db"
+}
+
+test.dependsOn migrateSqlite
+
+
+
+
