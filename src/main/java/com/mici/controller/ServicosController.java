@@ -1,11 +1,14 @@
 package com.mici.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mici.entity.Servico;
 import com.mici.service.ServicoService;
@@ -56,6 +59,12 @@ public class ServicosController {
 		model.addAttribute("mensagemSucesso", "Serviço salvo com sucesso!");
 		model.addAttribute("servicos", this.service.findAll());
 		return "servicos/listar_servicos";
+	}
+	
+	@ResponseBody
+	@GetMapping("data.json")
+	public List<Servico> getAllServicosAtivos() {
+		return this.service.findAll();
 	}
 	
 	
