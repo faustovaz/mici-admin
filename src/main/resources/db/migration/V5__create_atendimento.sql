@@ -5,6 +5,7 @@ create table atendimentos(
 	observacao text,
 	valor_atendimento real,
 	id_forma_pagamento integer,
-	id_cliente integer
+	id_cliente integer,
+	cortesia integer
 );
 

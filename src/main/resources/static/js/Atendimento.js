@@ -4,10 +4,7 @@ class Atendimentos {
     this.availableServices = [];
     this.fecthAvailableServices();
     this.container = document.querySelector(containerId);
-    this.btnAddServico = document.querySelector("#btn-add-servico");
-    const btnAddServico = document.querySelector("#btn-add-servico");
-    btnAddServico.addEventListener('click', s => this.addNewService());
-    this.bindEvents();
+    this.bindEvents("container-0", true);
   }
 
 
@@ -24,10 +21,20 @@ class Atendimentos {
   }
 
 
-  bindEvents() {
-      this.addEventListenerToRemoveServiceButtons("container-1");
-      this.addEventListenerToSelectOptions("container-1");
-      this.addEventListenerToChangePriceValues("container-1");
+  bindEvents(containerId, rebindAll) {
+      this.addEventListenerToRemoveServiceButtons(containerId);
+      this.addEventListenerToSelectOptions(containerId);
+      this.addEventListenerToChangePriceValues(containerId);
+      if(rebindAll) {
+    	document.querySelector("#btn-add-servico")
+    		.addEventListener('click', s => this.addNewService());
+		document
+			.querySelectorAll("input[name=cortesia]").forEach(e => {
+				e.addEventListener('click', (evt) => {
+					this._showHideSectionDadosPagamentos(evt.target);
+				});
+			});
+	  }
   }
 
 
@@ -47,10 +54,11 @@ class Atendimentos {
       <div class="col-5">
         <label for="nome" class="form-label">Serviço</label>
         <select class="form-select"
-          name="tipo-servico-${id}"
+          name="servicos[${id}].tipoServico"
+          id="servicos[${id}].tipoServico"
           data-action="select-servico"
           data-holder="${serviceContainerId}"
-          id="tipo_servico_${id}" aria-label="Default select example">
+          aria-label="Default select example">
             <option selected>Selecione uma opção</option>
             ${opcoes}
         </select>
@@ -59,19 +67,30 @@ class Atendimentos {
         <label for="nome" class="form-label">Valor padrão</label>
         <div class="input-group">
             <span class="input-group-text" id="price-text">R$</span>
-            <input type="text" class="form-control" disabled
-              name="vp-${id}" id="vp-${id}" data-holder="${serviceContainerId}"
-              required pattern="^[0-9]+[.]?[0-9]+$">
+            <input type="text" 
+        		class="form-control" disabled
+              	name="servicos[${id}].valorPadrao" 
+              	id="servicos[${id}].valorPadrao" 
+              	data-type="valor-padrao"
+              	data-holder="${serviceContainerId}"
+              	required 
+              	pattern="^[0-9]+[.]?[0-9]+$">
         </div>
       </div>
       <div class="col-3">
         <label for="nome" class="form-label">Valor aplicado</label>
         <div class="input-group">
             <span class="input-group-text" id="price-text">R$</span>
-            <input type="number" class="form-control" step="0.01"
-              name="va_${id}" id="va_${id}" data-holder="${serviceContainerId}"
-              data-action="valor-aplicado"
-              required pattern="^[0-9]+[.]?[0-9]+$">
+            <input type="number" 
+            	class="form-control" 
+            	step="0.01"
+              	name="servicos[${id}].valorAplicado" 
+              	id="servicos[${id}].valorAplicado" 
+              	data-type="valor-aplicado"
+              	data-holder="${serviceContainerId}"
+              	data-action="valor-aplicado"
+              	required 
+              	pattern="^[0-9]+[.]?[0-9]+$">
         </div>
       </div>
       <div class="col-1 d-flex align-items-end">
@@ -81,9 +100,7 @@ class Atendimentos {
         </button>
       </div>
     </div>`);
-    this.addEventListenerToRemoveServiceButtons(serviceContainerId);
-    this.addEventListenerToSelectOptions(serviceContainerId);
-    this.addEventListenerToChangePriceValues(serviceContainerId);
+	this.bindEvents(serviceContainerId, false);
   }
 
 
@@ -104,6 +121,7 @@ class Atendimentos {
     });
   }
 
+
   removeService(dataServiceId) {
     const allServices = this.container.querySelectorAll("[data-container]");
     if(allServices.length > 1) {
@@ -115,6 +133,7 @@ class Atendimentos {
         this.container.removeChild(elemToBeRemoved);
       }
     }
+    this.updateServicosIds();
     this.updateTotalAtendimento();
   }
 
@@ -141,6 +160,7 @@ class Atendimentos {
     })
   }
 
+
   updateTotalAtendimento() {
     const inputs = document.querySelectorAll('[data-action="valor-aplicado"]');
     const totalAplicado = document.querySelector("#total-atendimento");
@@ -152,6 +172,38 @@ class Atendimentos {
       'pt-Br',
       {style: 'currency', currency: "BRL"}).format(total)
     totalAplicado.innerHTML = totalF;
+  }
+
+  
+  updateServicosIds() {
+	console.log("uhet");
+	let id = 0;
+	const servicosElements = Array.from(document.querySelectorAll("[data-container]"));
+	servicosElements.forEach(s => {
+		s.setAttribute('data-container', `container-${id}`);
+		let select = s.querySelector('select');
+		let valorAplicado = s.querySelector('[data-type=valor-aplicado]');
+		let valorPadrao = s.querySelector('[data-type=valor-padrao]');
+		select.id =   `servicos[${id}][tipoServico]`;
+		select.name = `servicos[${id}][tipoServico]`;
+		valorAplicado.id =   `servicos[${id}][valorAplicado]`;
+		valorAplicado.name = `servicos[${id}][valorAplicado]`;
+		valorPadrao.id =   `servicos[${id}][valorPadrao]`;
+		valorPadrao.name = `servicos[${id}][valorPadrao]`;
+		id = id + 1;
+	});
+  }
+    
+  
+  _showHideSectionDadosPagamentos(cortesiaRadioButton) {
+	const sectionPgto = document.querySelector("#dados-pagamento");
+	if(cortesiaRadioButton.value === 'nao') { // Não é uma cortesia
+		sectionPgto.classList.remove('d-none');
+		sectionPgto.classList.add('d-block');
+	} else {
+		sectionPgto.classList.remove('d-block');
+		sectionPgto.classList.add('d-none');
+	}
   }
 
 }

@@ -27,16 +27,16 @@
 	      			<div class="card">
 	        			<div class="card-header">
 	          				<h5 th:text="|Cliente: ${cliente.nome}|"></h5>
-	          				<input type="hidden" id="id-cliente" name="id-cliente" th:value=${cliente.id}>
+	          				<input type="hidden" id="idCliente" name="idCliente" th:value=${cliente.id}>
 	        			</div>
 		        		<div class="card-body">
 		          			<ul class="list-group list-group-flush">
 		            			<li class="list-group-item">
 		              				<div  id="services-container">
-						                <div class="mb-3 row" data-container="container-1">
+						                <div class="mb-3 row" data-container="container-0">
 		                					<div class="col-5">
 		                  						<label for="nome" class="form-label">Serviço</label>
-		                  							<select required class="form-select" name="tipo-servico-1" data-action="select-servico" data-holder="container-1" id="tipo-servico-1" aria-label="Default select example">
+		                  							<select class="form-select" name="servicos[0].tipoServico" id="servicos[0].tipoServico" data-action="select-servico" data-holder="container-0" required>
 								                 		<option selected>Selecione uma opção</option>
 							  							<option th:each="servico: ${servicos}" th:value="${servico.id}" th:text="${servico.nome}">
 		                  							</select>
@@ -45,18 +45,18 @@
 			                  					<label for="nome" class="form-label">Valor padrão</label>
 			                  					<div class="input-group">
 			                      					<span class="input-group-text" id="price-text">R$</span>
-													<input type="text" class="form-control" disabled name="vp-1" id="vp-1" data-holder="container-1" required pattern="^[0-9]+[.]?[0-9]+$">
+													<input type="text" class="form-control" name="servicos[0].valorPadrao" id="servicos[0].valorPadrao" disabled data-type="valor-padrao" data-holder="container-0" pattern="^[0-9]+[.]?[0-9]+$" required>
 			                  					</div>
 			                				</div>
 			                				<div class="col-3">
 			                  					<label for="nome" class="form-label">Valor aplicado</label>
 			                  					<div class="input-group">
 			                      					<span class="input-group-text" id="price-text">R$</span>
-					            					<input type="number" class="form-control" step="0.01" name="va_1" id="va_1" data-holder="container-1" data-action="valor-aplicado" required pattern="^[0-9]+[.]?[0-9]+$">
+					            					<input type="number" class="form-control" step="0.01" name="servicos[0].valorAplicado" id="servicos[0].valorAplicado" data-holder="container-0" data-type="valor-aplicado" data-action="valor-aplicado" pattern="^[0-9]+[.]?[0-9]+$" required>
 			                  					</div>
 			                				</div>
 			                				<div class="col-1 d-flex align-items-end">
-			                  					<button class="btn btn-outline-danger" data-action="remove-servico" data-holder="container-1">
+			                  					<button class="btn btn-outline-danger" data-action="remove-servico" data-holder="container-0">
 			                    					<i class="fa fa-remove"></i>
 			                  					</button>
 			                				</div>
@@ -77,21 +77,32 @@
 		              				<div class="row">
 		                				<div class="col d-flex justify-content-end">
 		                  					<div class="mb-3">
-		                    					<input type="checkbox" name="pagamento-realizado" id="pagamento-realizado"> Pagamento realizado
+		                  						<span class="me-3">É uma cortesia?</span>
+		                  						<input type="radio" id="cortesia_sim" name="cortesia" value="sim" checked> Sim
+		                    					<input class="ms-2" type="radio" id="cortesia_nao" name="cortesia" value="nao"> Não
 		                  					</div>
 		                				</div>
 		              				</div>
-    								<div class="row">
-  										<div class="col d-flex justify-content-end">
-											<div class="mb-3">
-  												<label for="nome" class="form-label">Forma de Pagamento</label>
-  												<select class="form-select" name="forma-pgto" id="forma-pgto" aria-label="Default select example">
-  													<option selected value="0">Selecione</option>
-													<option th:each="formaPagamento: ${formasPagamento}" th:value="${formaPagamento.id}" th:text="${formaPagamento.nome}">
-  												</select>
-											</div>
-  										</div>
-  									</div>
+		              				<section id="dados-pagamento" class="d-none">
+			              				<div class="row">
+			                				<div class="col d-flex justify-content-end">
+			                  					<div class="mb-3">
+			                    					<input type="checkbox" name="pagamento-realizado" id="pagamento-realizado"> Pagamento realizado
+			                  					</div>
+			                				</div>
+			              				</div>
+	    								<div class="row">
+	  										<div class="col d-flex justify-content-end">
+												<div class="mb-3">
+	  												<label for="nome" class="form-label">Forma de Pagamento</label>
+	  												<select class="form-select" name="forma-pgto" id="forma-pgto" aria-label="Default select example">
+	  													<option selected value="0">Selecione</option>
+														<option th:each="formaPagamento: ${formasPagamento}" th:value="${formaPagamento.id}" th:text="${formaPagamento.nome}">
+	  												</select>
+												</div>
+	  										</div>
+	  									</div>
+		              				</section>
 									<div class="row">
                     					<div class="col d-flex justify-content-end">
 	                      					<div class="mb-3">

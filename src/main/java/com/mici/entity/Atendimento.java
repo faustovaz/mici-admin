@@ -58,6 +58,8 @@ public class Atendimento {
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
 	
+	private Boolean cortesia;
+	
 	public void adicionarItemAtendimento(ItemAtendimento itemAtendimento){
 		if (Objects.isNull(itensAtendimento)) {
 			this.itensAtendimento = new ArrayList<>();
