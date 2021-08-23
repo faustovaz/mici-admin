@@ -197,7 +197,7 @@ class Atendimentos {
   
   _showHideSectionDadosPagamentos(cortesiaRadioButton) {
 	const sectionPgto = document.querySelector("#dados-pagamento");
-	if(cortesiaRadioButton.value === 'nao') { // Não é uma cortesia
+	if(cortesiaRadioButton.value === 'false') { // Não é uma cortesia
 		sectionPgto.classList.remove('d-none');
 		sectionPgto.classList.add('d-block');
 	} else {

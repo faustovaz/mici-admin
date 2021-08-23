@@ -6,6 +6,7 @@ create table atendimentos(
 	valor_atendimento real,
 	id_forma_pagamento integer,
 	id_cliente integer,
-	cortesia integer
+	cortesia integer,
+	ultima_atualizacao text
 );
 

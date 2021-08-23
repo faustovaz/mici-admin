@@ -1,9 +1,9 @@
-package com.mici.component;
+package com.mici.form;
 
 import lombok.Data;
 
 @Data
-public class ServicoFormaData {
+public class ServicoForm {
 	String tipoServico;
 	String valorAplicado;
 }

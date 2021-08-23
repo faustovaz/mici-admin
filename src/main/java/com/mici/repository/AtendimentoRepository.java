@@ -1,11 +1,17 @@
 package com.mici.repository;
 
+import java.util.List;
+
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.mici.entity.Atendimento;
+import com.mici.entity.Cliente;
 
 @Repository
 public interface AtendimentoRepository extends JpaRepository<Atendimento, Integer>{
+
+	List<Atendimento> findAllByCliente(Cliente cliente, Sort sort);
 
 }

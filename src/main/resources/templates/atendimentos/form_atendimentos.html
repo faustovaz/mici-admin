@@ -77,9 +77,17 @@
 		              				<div class="row">
 		                				<div class="col d-flex justify-content-end">
 		                  					<div class="mb-3">
+		                  						<span class="me-3">Data do Atendimento</span>
+												<input type="date" class="form-control" name="dataAtendimento" id="dataAtendimento" th:value="${dataAtual}">
+		                  					</div>
+		                				</div>
+		              				</div>
+		              				<div class="row">
+		                				<div class="col d-flex justify-content-end">
+		                  					<div class="mb-3">
 		                  						<span class="me-3">É uma cortesia?</span>
-		                  						<input type="radio" id="cortesia_sim" name="cortesia" value="sim" checked> Sim
-		                    					<input class="ms-2" type="radio" id="cortesia_nao" name="cortesia" value="nao"> Não
+		                  						<input type="radio" id="cortesia_sim" name="cortesia" value="true" checked> Sim
+		                    					<input class="ms-2" type="radio" id="cortesia_nao" name="cortesia" value="false"> Não
 		                  					</div>
 		                				</div>
 		              				</div>
@@ -87,7 +95,7 @@
 			              				<div class="row">
 			                				<div class="col d-flex justify-content-end">
 			                  					<div class="mb-3">
-			                    					<input type="checkbox" name="pagamento-realizado" id="pagamento-realizado"> Pagamento realizado
+			                    					<input type="checkbox" name="pagamentoRealizado" id="pagamentoRealizado"> Pagamento realizado
 			                  					</div>
 			                				</div>
 			              				</div>
@@ -95,7 +103,7 @@
 	  										<div class="col d-flex justify-content-end">
 												<div class="mb-3">
 	  												<label for="nome" class="form-label">Forma de Pagamento</label>
-	  												<select class="form-select" name="forma-pgto" id="forma-pgto" aria-label="Default select example">
+	  												<select class="form-select" name="formaPgto" id="formaPgto" aria-label="Default select example">
 	  													<option selected value="0">Selecione</option>
 														<option th:each="formaPagamento: ${formasPagamento}" th:value="${formaPagamento.id}" th:text="${formaPagamento.nome}">
 	  												</select>
@@ -107,7 +115,7 @@
                     					<div class="col d-flex justify-content-end">
 	                      					<div class="mb-3">
 	                        					<label for="nome" class="form-label">Observação</label>
-	                    						<textarea name="atendimento-observacao" id="atendimento-observacao" cols="30" rows="3" class="form-control"></textarea>
+	                    						<textarea name="atendimentoObservacao" id="atendimentoObservacao" cols="30" rows="3" class="form-control"></textarea>
 	                      					</div>
                     					</div>
                 					</div>

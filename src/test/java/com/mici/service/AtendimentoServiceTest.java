@@ -80,7 +80,7 @@ class AtendimentoServiceTest {
 									.build();
 			
 			
-		atendimentoService.cadastrar(atendimento);
+		atendimentoService.salvar(atendimento);
 		List<Map<String, Object>> atendimentos = jdbcTemplate.queryForList("select * from atendimentos");
 		assertThat(atendimentos.size()).isEqualTo(1);
 		

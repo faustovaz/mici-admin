@@ -2,7 +2,9 @@ package com.mici.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,6 +24,7 @@ import javax.persistence.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.mici.dialect.SQLiteLocalDateConverter;
+import com.mici.dialect.SQLiteLocalDateTimeConverter;
 
 import lombok.Data;
 
@@ -35,7 +38,7 @@ public class Atendimento {
 	private Integer id;
 	
 	@Column(name = "pagamento_realizado")
-	private Boolean pagamentoRealizado;
+	private boolean pagamentoRealizado;
 	
 	@Convert(converter = SQLiteLocalDateConverter.class)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -58,7 +61,11 @@ public class Atendimento {
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
 	
-	private Boolean cortesia;
+	private boolean cortesia;
+
+	@Convert(converter = SQLiteLocalDateTimeConverter.class)
+	@Column(name = "ultima_atualizacao")
+	private LocalDateTime ultimaAtualizacao;
 	
 	public void adicionarItemAtendimento(ItemAtendimento itemAtendimento){
 		if (Objects.isNull(itensAtendimento)) {
@@ -71,6 +78,18 @@ public class Atendimento {
 	
 	public void adicionarItensAtendimento(List<ItemAtendimento> itens){
 		itens.forEach(item -> this.adicionarItemAtendimento(item));
+	}
+	
+	public Date getDiaDoAtendimentoAsDate() {
+		return java.sql.Date.valueOf(getDiaDoAtendimento());
+	}
+	
+	public BigDecimal getTotalAtendimento() {
+		BigDecimal pretoAtendimento = this.itensAtendimento
+			.stream()
+			.map(item -> item.getPrecoAplicado())
+			.reduce(new BigDecimal(0), (total, preco) -> total.add(preco));
+		return pretoAtendimento;
 	}
 	
 }
