@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mici.entity.Atendimento;
 import com.mici.entity.Cliente;
@@ -32,6 +33,11 @@ public class AtendimentoService {
 
 	public List<Atendimento> findAllByCliente(Cliente cliente) {
 		return this.atendimentoRepository.findAllByCliente(cliente, Sort.by(Direction.DESC, "id"));
+	}
+	
+	@Transactional
+	public void remove(Atendimento atendimento) {
+		this.atendimentoRepository.deleteById(atendimento.getId());
 	}
 
 }

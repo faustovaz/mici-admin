@@ -109,4 +109,19 @@ public class AtendimentoController {
 			return "404";
 		}
 	}
+	
+	@GetMapping("remover/{idAtendimento}")
+	public String remover(@PathVariable("idAtendimento") Integer idAtendimento) {
+		try {
+			Optional<Atendimento> atendimentoOp = this.service.findById(idAtendimento);
+			if(atendimentoOp.isEmpty())
+				return "404";
+			var atendimento = atendimentoOp.get();
+			this.service.remove(atendimento);
+			return "redirect:/atendimentos/listar/" + atendimento.getCliente().getId();
+		}
+		catch(Exception e) {
+			return "404";
+		}
+	}
 }

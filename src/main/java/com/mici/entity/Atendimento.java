@@ -50,7 +50,7 @@ public class Atendimento {
 	@Column(name = "valor_atendimento")
 	private BigDecimal valorAtendimento = new BigDecimal(0);
 	
-	@OneToMany(mappedBy = "atendimento", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "atendimento", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ItemAtendimento> itensAtendimento;
 	
 	@ManyToOne
