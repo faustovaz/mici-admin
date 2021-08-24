@@ -1,5 +1,6 @@
 package com.mici.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +39,10 @@ public class AtendimentoService {
 	@Transactional
 	public void remove(Atendimento atendimento) {
 		this.atendimentoRepository.deleteById(atendimento.getId());
+	}
+
+	public List<Atendimento> findAllAtendimentosDeHoje() {
+		return this.atendimentoRepository.findAllByDiaDoAtendimento(LocalDate.now(), Sort.by(Direction.DESC, "id"));
 	}
 
 }

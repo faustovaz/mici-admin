@@ -124,4 +124,12 @@ public class AtendimentoController {
 			return "404";
 		}
 	}
+	
+	
+	@GetMapping("listar/hoje")
+	public String listarAtendimentosDeHoje(Model model) {
+		List<Atendimento> atendimentos = this.service.findAllAtendimentosDeHoje();
+		model.addAttribute("atendimentos", atendimentos);		
+		return "atendimentos/listar_atendimentos";
+	}
 }

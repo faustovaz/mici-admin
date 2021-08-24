@@ -1,5 +1,6 @@
 package com.mici.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.domain.Sort;
@@ -13,5 +14,7 @@ import com.mici.entity.Cliente;
 public interface AtendimentoRepository extends JpaRepository<Atendimento, Integer>{
 
 	List<Atendimento> findAllByCliente(Cliente cliente, Sort sort);
+
+	List<Atendimento> findAllByDiaDoAtendimento(LocalDate now, Sort sort);
 
 }

@@ -10,6 +10,9 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
@@ -91,6 +94,53 @@ class AtendimentoServiceTest {
 		assertThat(atendimentoOptional.get().getValorAtendimento()).isEqualByComparingTo(new BigDecimal(45));
 		assertThat(atendimentoOptional.get().getObservacao()).isEqualTo("Novo Atendimento");
 		assertThat(atendimentoOptional.get().getItensAtendimento().size()).isEqualTo(2);
+	}
+	
+	
+	@Test
+	void deveRetornarSomenteAtendimentosDoDiaCorrente() {
+		Atendimento atendimento1 = new AtendimentoBuilder()
+				.pago()
+				.doCliente(clienteService.findById(1))
+				.hoje()
+				.comFormaDePagamento(formaPgtoRepo.findById(2).get())
+				.comObservacao("Novo Atendimento 1")
+				.comItemAtendimento()
+					.comServico(servicoService.findById(1))
+					.comPreco(new BigDecimal(25))
+					.build()
+				.build();
+		
+		Atendimento atendimento2 = new AtendimentoBuilder()
+				.pago()
+				.doCliente(clienteService.findById(2))
+				.hoje()
+				.comFormaDePagamento(formaPgtoRepo.findById(2).get())
+				.comObservacao("Novo Atendimento 2")
+				.comItemAtendimento()
+					.comServico(servicoService.findById(1))
+					.comPreco(new BigDecimal(25))
+					.build()
+				.build();
+		
+		Atendimento atendimento3 = new AtendimentoBuilder()
+				.naoPago()
+				.doCliente(clienteService.findById(1))
+				.deOntem()
+				.comFormaDePagamento(formaPgtoRepo.findById(2).get())
+				.comObservacao("Novo Atendimento 3")
+				.comItemAtendimento()
+					.comServico(servicoService.findById(1))
+					.comPreco(new BigDecimal(25))
+					.build()
+				.build();
+		
+		List.of(atendimento1, atendimento2, atendimento3)
+			.forEach(atendimento -> atendimentoService.salvar(atendimento));
+		
+		List<Atendimento> deHoje = atendimentoService.findAllAtendimentosDeHoje();
+		assertThat(deHoje.size()).isEqualTo(2);
+		assertThat(deHoje.get(0).getObservacao()).isEqualTo("Novo Atendimento 2");
 	}
 
 }

@@ -33,6 +33,13 @@ public class AtendimentoBuilder  {
 		return this;
 	}
 	
+	public AtendimentoBuilder deOntem() {
+		LocalDate hoje = LocalDate.now();
+		LocalDate ontem = hoje.minusDays(1);
+		this.atendimento.setDiaDoAtendimento(ontem);
+		return this;
+	}
+	
 	public AtendimentoBuilder comObservacao(String observacao) {
 		this.atendimento.setObservacao(observacao);
 		return this;

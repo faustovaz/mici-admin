@@ -21,10 +21,28 @@
                             <i class="fa fa-calendar"></i> Agenda
                         </a>
                     </li>
-                    <li class="nav-item pe-3">
-                        <a href="#" class="nav-link">
+                    <li class="nav-item dropdown pe-3">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-address-book"></i> Atendimentos
                         </a>
+                        <ul class="dropdown-menu">
+                        	<li>
+                        		<a href="/clientes/listar" class="dropdown-item">
+                        			<i class="fa fa-address-book"></i> Fazer atendimento
+                        		</a>
+                        	</li>
+                    	    <li><hr class="dropdown-divider"></li>
+                    	    <li>
+                    	    	<a href="/atendimentos/listar/hoje" class="dropdown-item">
+                    	    		<i class="fa fa-arrow-circle-o-down"></i> Ver atendimentos de hoje
+                    	    	</a>
+                    	    </li>
+                    	    <li>
+                    	    	<a href="#" class="dropdown-item">
+                    	    		<i class="fa fa-exclamation-circle"></i> Ver atendimentos não pagos
+                    	    	</a>
+                    	    </li>                    	    
+                        </ul>
                     </li>
                     <li class="nav-item dropdown pe-3">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
