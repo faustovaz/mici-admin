@@ -45,4 +45,8 @@ public class AtendimentoService {
 		return this.atendimentoRepository.findAllByDiaDoAtendimento(LocalDate.now(), Sort.by(Direction.DESC, "id"));
 	}
 
+	public List<Atendimento> findAllNaoPagos() {
+		return this.atendimentoRepository.findAllByPagamentoRealizadoFalseAndCortesiaFalse(Sort.by(Direction.DESC, "id"));
+	}
+
 }

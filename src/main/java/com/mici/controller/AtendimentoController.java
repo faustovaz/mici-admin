@@ -45,6 +45,7 @@ public class AtendimentoController {
 		this.atendimentoTranformer = transformer;
 	}
 	
+	
 	@GetMapping("novo/{idCliente}")
 	public String form(@PathVariable("idCliente") Integer idCliente, Model model) {
 		model.addAttribute("cliente", this.clienteService.findById(idCliente));
@@ -54,6 +55,7 @@ public class AtendimentoController {
 		return "atendimentos/form_atendimentos";
 	}
 	
+	
 	@GetMapping("listar/{idCliente}") 
 	public String listarPorCliente(@PathVariable("idCliente") Integer idCliente, Model model){
 		Cliente cliente = this.clienteService.findById(idCliente);
@@ -62,6 +64,7 @@ public class AtendimentoController {
 		model.addAttribute("atendimentos", atendimentos);
 		return "atendimentos/listar_atendimentos";
 	}
+	
 	
 	@PostMapping("cadastrar")
 	public String cadastrar(AtendimentoForm form) {
@@ -75,6 +78,7 @@ public class AtendimentoController {
 		}
 	}
 	
+	
 	@GetMapping("editar/{idAtendimento}")
 	public String editar(@PathVariable("idAtendimento") Integer idAtendimento, Model model){
 		Optional<Atendimento> atendimentoOp = this.service.findById(idAtendimento);
@@ -82,6 +86,7 @@ public class AtendimentoController {
 		model.addAttribute("formasPagamento", this.formaPagamentoRepository.findAll());
 		return "atendimentos/editar_atendimentos";
 	}
+	
 	
 	@PostMapping("atualizar")
 	public String atualizar(@RequestParam("cortesia") boolean cortesia,
@@ -110,6 +115,7 @@ public class AtendimentoController {
 		}
 	}
 	
+	
 	@GetMapping("remover/{idAtendimento}")
 	public String remover(@PathVariable("idAtendimento") Integer idAtendimento) {
 		try {
@@ -129,6 +135,14 @@ public class AtendimentoController {
 	@GetMapping("listar/hoje")
 	public String listarAtendimentosDeHoje(Model model) {
 		List<Atendimento> atendimentos = this.service.findAllAtendimentosDeHoje();
+		model.addAttribute("atendimentos", atendimentos);		
+		return "atendimentos/listar_atendimentos";
+	}
+	
+	
+	@GetMapping("listar/naopagos")
+	public String listarAtendimentosNaoPagos(Model model) {
+		List<Atendimento> atendimentos = this.service.findAllNaoPagos();
 		model.addAttribute("atendimentos", atendimentos);		
 		return "atendimentos/listar_atendimentos";
 	}

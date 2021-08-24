@@ -33,6 +33,16 @@ public class AtendimentoBuilder  {
 		return this;
 	}
 	
+	public AtendimentoBuilder cortesia() {
+		this.atendimento.setCortesia(true);
+		return this;
+	}
+	
+	public AtendimentoBuilder naoCortesia() {
+		this.atendimento.setCortesia(false);
+		return this;
+	}
+	
 	public AtendimentoBuilder deOntem() {
 		LocalDate hoje = LocalDate.now();
 		LocalDate ontem = hoje.minusDays(1);

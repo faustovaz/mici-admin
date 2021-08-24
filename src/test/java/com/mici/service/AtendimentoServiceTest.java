@@ -10,9 +10,6 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
@@ -141,6 +138,58 @@ class AtendimentoServiceTest {
 		List<Atendimento> deHoje = atendimentoService.findAllAtendimentosDeHoje();
 		assertThat(deHoje.size()).isEqualTo(2);
 		assertThat(deHoje.get(0).getObservacao()).isEqualTo("Novo Atendimento 2");
+	}
+	
+	
+	@Test
+	void deveRetornarSomenteAtendimentosNaoPagos() {
+		Atendimento atendimento1 = new AtendimentoBuilder()
+				.pago()
+				.naoCortesia()
+				.doCliente(clienteService.findById(1))
+				.hoje()
+				.comFormaDePagamento(formaPgtoRepo.findById(2).get())
+				.comObservacao("Novo Atendimento 1")
+				.comItemAtendimento()
+					.comServico(servicoService.findById(1))
+					.comPreco(new BigDecimal(25))
+					.build()
+				.build();
+		
+		Atendimento atendimento2 = new AtendimentoBuilder()
+				.naoPago()
+				.naoCortesia()
+				.doCliente(clienteService.findById(2))
+				.hoje()
+				.comFormaDePagamento(formaPgtoRepo.findById(2).get())
+				.comObservacao("Novo Atendimento 2")
+				.comItemAtendimento()
+					.comServico(servicoService.findById(1))
+					.comPreco(new BigDecimal(25))
+					.build()
+				.build();
+		
+		Atendimento atendimento3 = new AtendimentoBuilder()
+				.naoPago()
+				.cortesia()
+				.doCliente(clienteService.findById(2))
+				.hoje()
+				.comFormaDePagamento(formaPgtoRepo.findById(2).get())
+				.comObservacao("Novo Atendimento 3")
+				.comItemAtendimento()
+					.comServico(servicoService.findById(1))
+					.comPreco(new BigDecimal(25))
+					.build()
+				.build();
+		
+		atendimentoService.salvar(atendimento1);
+		atendimentoService.salvar(atendimento2);
+		atendimentoService.salvar(atendimento3);
+		
+		List<Atendimento> naoPagos = atendimentoService.findAllNaoPagos();
+		assertThat(naoPagos.size()).isEqualTo(1);
+		assertThat(naoPagos.get(0).getObservacao()).isEqualTo("Novo Atendimento 2");
+		
 	}
 
 }
