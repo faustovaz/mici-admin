@@ -55,10 +55,21 @@ public class ServicosController {
 	
 	@PostMapping("cadastrar")
 	public String cadastrarServico(Servico servico, Model model) {
-		this.service.salvar(servico);
-		model.addAttribute("mensagemSucesso", "Serviço salvo com sucesso!");
-		model.addAttribute("servicos", this.service.findAll());
-		return "servicos/listar_servicos";
+		try {
+			model.addAttribute("mensagemSucesso", "Serviço salvo com sucesso!");
+			model.addAttribute("servico", new Servico());
+			model.addAttribute("titulo_form", "Cadastrar novo Serviço");
+			model.addAttribute("texto_botao", "Cadastrar");
+			this.service.salvar(servico);
+		}
+		catch(IllegalArgumentException e) {
+			model.addAttribute("mensagemErro", "Não foi possível cadastrar o serviço. Tente novamente!");
+			model.addAttribute("servico", new Servico());
+			model.addAttribute("titulo_form", "Cadastrar novo Serviço");
+			model.addAttribute("texto_botao", "Cadastrar");
+		}
+		
+		return "servicos/form_servicos";
 	}
 	
 	@ResponseBody

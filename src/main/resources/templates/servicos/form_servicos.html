@@ -21,6 +21,18 @@
         </div>
     </header>
 
+	<div class="container" th:if="${mensagemSucesso} != null">
+		<div class="alert alert-success alert-dismissible fade show" role="alert" th:text="${mensagemSucesso}">
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	</div>
+	
+	<div class="container" th:if="${mensagemErro} != null">
+		<div class="alert alert-danger alert-dismissible fade show" role="alert" th:text="${mensagemErro}">
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	</div>
+
     <section id="details" class="mt-2">
         <div class="container">
             <div class="row">
@@ -34,7 +46,7 @@
                             <div class="card-body">
                                     <div class="mb-3">
                                         <label for="nome" class="form-label">Nome do serviço</label>
-                                        <input type="text" th:field="*{nome}" class="form-control" required minlength="3">
+                                        <input type="text" th:field="*{nome}" class="form-control" required minlength="3" autofocus>
                                     </div>
                                     <div class="mb-3">
                                         <label for="preco" class="form-label">Preço</label>
