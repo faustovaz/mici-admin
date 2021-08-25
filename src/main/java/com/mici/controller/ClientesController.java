@@ -49,7 +49,13 @@ public class ClientesController {
 	
 	@GetMapping("listar")
 	public String listarClientes(Model model) { 
-		model.addAttribute("clientes", this.service.findAll());
+		List<Cliente> all = this.service.findAll();
+		
+		if (all.size() > 10) {
+			all = all.subList(0, 10);
+		}
+			
+		model.addAttribute("clientes", all);
 		model.addAttribute("termo_busca", "");
 		return "clientes/listar_clientes";
 	}
