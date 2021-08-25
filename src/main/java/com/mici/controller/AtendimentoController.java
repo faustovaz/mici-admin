@@ -156,4 +156,27 @@ public class AtendimentoController {
 		model.addAttribute("atendimentos", atendimentos);		
 		return "atendimentos/listar_atendimentos";
 	}
+	
+	
+	@GetMapping("consultar")
+	public String formConsultar(Model model) {
+		model.addAttribute("dataInicial", LocalDate.now());
+		model.addAttribute("dataFinal", LocalDate.now());
+		return "atendimentos/consultar_atendimentos";
+	}
+	
+	
+	@PostMapping("consultar")
+	public String consultar(
+			@RequestParam(required = false, name = "dataInicial") String strDataInicial,
+			@RequestParam(required = false, name = "dataFinal") String strDataFinal,
+			Model model) {
+		var dataInicial = LocalDate.parse(strDataInicial);
+		var dataFinal = LocalDate.parse(strDataFinal);
+		var atendimentos = this.service.findByDiaDoAtendimentoBetween(dataInicial, dataFinal);
+		model.addAttribute("dataInicial", dataInicial);
+		model.addAttribute("dataFinal", dataFinal);
+		model.addAttribute("atendimentos", atendimentos);
+		return "atendimentos/consultar_atendimentos";
+	}
 }

@@ -49,4 +49,8 @@ public class AtendimentoService {
 		return this.atendimentoRepository.findAllByPagamentoRealizadoFalseAndCortesiaFalse(Sort.by(Direction.DESC, "id"));
 	}
 
+	public List<Atendimento> findByDiaDoAtendimentoBetween(LocalDate inicio, LocalDate fim) {
+		return this.atendimentoRepository.findByDiaDoAtendimentoBetween(inicio, fim, Sort.by(Direction.DESC, "id"));
+	}
+
 }

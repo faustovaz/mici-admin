@@ -19,4 +19,6 @@ public interface AtendimentoRepository extends JpaRepository<Atendimento, Intege
 
 	List<Atendimento> findAllByPagamentoRealizadoFalseAndCortesiaFalse(Sort sort);
 
+	List<Atendimento> findByDiaDoAtendimentoBetween(LocalDate inicio, LocalDate fim, Sort by);
+
 }
