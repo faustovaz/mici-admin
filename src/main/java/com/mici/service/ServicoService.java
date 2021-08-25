@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.mici.entity.Servico;
@@ -23,7 +25,7 @@ public class ServicoService {
 	}
 	
 	public List<Servico> findAll() {
-		return this.repository.findAllNaoRemovidos();
+		return this.repository.findAllNaoRemovidos(Sort.by(Direction.ASC, "nome"));
 	}
 	
 	public Servico findById(Integer id) {
