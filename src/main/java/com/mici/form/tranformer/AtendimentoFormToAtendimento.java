@@ -29,15 +29,11 @@ public class AtendimentoFormToAtendimento {
 		try {
 			Atendimento atendimento = new Atendimento();
 			atendimento.setCliente(this.clienteService.findById(Integer.valueOf(form.getIdCliente())));
-			
 			atendimento.setCortesia(form.isCortesia());
-			
 			atendimento.setDiaDoAtendimento(form.getDataAtendimento());
-			
 			atendimento.setPagamentoRealizado(Boolean.valueOf(form.isPagamentoRealizado()));
 			
 			var idFormaPgto = Integer.valueOf(form.getFormaPgto());
-			
 			if (!atendimento.isCortesia() && atendimento.isPagamentoRealizado() && idFormaPgto > 0) {
 				atendimento.setFormaPagamento(formaPagamentoRepository.getById(idFormaPgto));
 			}
@@ -50,6 +46,12 @@ public class AtendimentoFormToAtendimento {
 				atendimento.adicionarItemAtendimento(itemAtendimento);
 			});
 			
+			if(atendimento.isPagamentoRealizado()) {
+				atendimento.setValorPago(atendimento.getTotalAtendimento());
+			} else {
+				atendimento.setValorPago(form.getValorPago());
+			}
+			
 			atendimento.setObservacao(form.getAtendimentoObservacao());
 			return atendimento;
 		}
@@ -57,5 +59,7 @@ public class AtendimentoFormToAtendimento {
 			throw new IllegalStateException("IDs informados não são tipo númerico.");
 		}
 	}
+	
+	
 	
 }

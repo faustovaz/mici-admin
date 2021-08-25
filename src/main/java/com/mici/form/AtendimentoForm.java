@@ -1,5 +1,6 @@
 package com.mici.form;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class AtendimentoForm {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataAtendimento;
 	private boolean pagamentoRealizado;
+	private BigDecimal valorPago;
 }
 
 

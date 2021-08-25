@@ -34,7 +34,8 @@
                             	<th>Data do atendimento</th>
                             	<th>Cortesia?</th>
                             	<th>Pago?</th>
-                            	<th>Preço</th>
+                            	<th>Valor pago</th>
+                            	<th>Total</th>
                             	<th></th>
                         	</tr>
                     	</thead>
@@ -44,6 +45,7 @@
         	                    <td th:text="${#dates.format(atendimento.diaDoAtendimentoAsDate, 'dd/MM/yyyy')}"></td>
             	                <td th:text="${#bools.isTrue(atendimento.cortesia)} ? Sim : Não"></td>
                 	            <td th:text="${#bools.isTrue(atendimento.pagamentoRealizado)} ? Sim : Não"></td>
+                	            <td th:text="${#numbers.formatCurrency(atendimento.valorPago)}"></td>
                 	            <td th:text="${#numbers.formatCurrency(atendimento.totalAtendimento)}"></td>
                     	        <td class='text-end'>
        	                       		<a th:href="@{'/atendimentos/editar/' + ${atendimento.id}}" class="btn btn-primary">

@@ -34,6 +34,8 @@ class Atendimentos {
 					this._showHideSectionDadosPagamentos(evt.target);
 				});
 			});
+		document.querySelector("#pagamentoRealizado")
+			.addEventListener('click', evt => this.updateValorPago(evt.target));
 	  }
   }
 
@@ -162,16 +164,23 @@ class Atendimentos {
 
 
   updateTotalAtendimento() {
-    const inputs = document.querySelectorAll('[data-action="valor-aplicado"]');
+	const total = this._sumTotalAtendimento();
     const totalAplicado = document.querySelector("#total-atendimento");
-    const total = Array.from(inputs)
-      .map(input => parseFloat(input.value))
-      .filter(e => !isNaN(e))
-      .reduce((i, sum) => i + sum);
     const totalF = new Intl.NumberFormat(
       'pt-Br',
       {style: 'currency', currency: "BRL"}).format(total)
     totalAplicado.innerHTML = totalF;
+  }
+  
+  
+  _sumTotalAtendimento(){
+    const inputs = document.querySelectorAll('[data-action="valor-aplicado"]');
+    const values = Array.from(inputs)
+      .map(input => parseFloat(input.value))
+      .filter(e => !isNaN(e));
+    if(values.length > 0)
+    	return values.reduce((i, sum) => i + sum);
+    return 0;
   }
 
   
@@ -203,6 +212,18 @@ class Atendimentos {
 	} else {
 		sectionPgto.classList.remove('d-block');
 		sectionPgto.classList.add('d-none');
+	}
+  }
+  
+  updateValorPago(element) {
+	const valorPago = document.querySelector("#valorPago");
+  	if(element.checked){
+		valorPago.value = this._sumTotalAtendimento();
+		valorPago.disabled = true;
+	}
+	else {
+		valorPago.value = '0.00';
+		valorPago.disabled = false;
 	}
   }
 

@@ -57,6 +57,9 @@ public class Atendimento {
 	@JoinColumn(name = "id_forma_pagamento")
 	private FormaPagamento formaPagamento;
 	
+	@Column(name = "valor_pago")
+	private BigDecimal valorPago;
+	
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;

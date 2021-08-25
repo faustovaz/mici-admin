@@ -93,6 +93,19 @@
 												</div>
 	  										</div>
 	  									</div>
+										<div class="row">
+	                    					<div class="col d-flex justify-content-end">
+	                    						<div class="mb-3">
+                                        			<label for="valorPago" class="form-label">Valor pago</label>
+                                        			<div class="input-group mb-3">
+                                            			<span class="input-group-text">R$</span>
+                                            			<input th:value="${atendimento.valorPago}" type="text" id="valorPago" name="valorPago" class="form-control" required pattern="^[0-9]+[.]?[0-9]+$">
+                                            			<input type="hidden" th:value="${atendimento.valorPago}" id="valorJaPago">
+                                            			<input type="hidden" th:value="${atendimento.valorAtendimento}" id="valorAtendimento">
+                                        			</div>
+	                    						</div>
+	                    					</div>
+	                					</div>	 	  									
 		              				</section>
 									<div class="row">
                     					<div class="col d-flex justify-content-end">
@@ -123,7 +136,23 @@
 	  		</div>
 		</section>
 	
-		
+		<script>
+			const pgtoRealizado = document.querySelector("#pagamentoRealizado");
+			const valorPago = document.querySelector("#valorPago");
+			const valorJaPago = document.querySelector("#valorJaPago");
+			const valorAtendimento = document.querySelector("#valorAtendimento");
+			
+			pgtoRealizado.addEventListener('click', e => {
+			  	if(e.target.checked){
+					valorPago.value = valorAtendimento.value;
+					valorPago.disabled = true;
+				}
+				else {
+					valorPago.value = valorJaPago.value;
+					valorPago.disabled = false;
+				}
+			});
+		</script>
 		<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 	</body>
 </html>

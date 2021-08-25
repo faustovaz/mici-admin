@@ -1,5 +1,6 @@
 package com.mici.controller;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -92,6 +93,7 @@ public class AtendimentoController {
 	public String atualizar(@RequestParam("cortesia") boolean cortesia,
 			@RequestParam(required = false, name = "pagamentoRealizado") Boolean pagamentoRealizado,
 			@RequestParam("formaPgto") Integer formaPagamento,
+			@RequestParam(required = false, name = "valorPago") BigDecimal valorPago,
 			@RequestParam("atendimentoObservacao") String observacao,
 			@RequestParam("idAtendimento") Integer idAtendimento) {
 		try {
@@ -102,10 +104,18 @@ public class AtendimentoController {
 			Atendimento atendimento = atendimentoOp.get();
 			atendimento.setCortesia(cortesia);
 			atendimento.setPagamentoRealizado(!Objects.isNull(pagamentoRealizado) && pagamentoRealizado ? true : false);
+			
 			if (formaPagamento > 0) {
 				Optional<FormaPagamento> formaPgtoOp = this.formaPagamentoRepository.findById(formaPagamento);
 				atendimento.setFormaPagamento(formaPgtoOp.isPresent() ? formaPgtoOp.get() : null);
 			}
+			
+			if (!atendimento.isPagamentoRealizado()) {
+				atendimento.setValorPago(valorPago);
+			} else {
+				atendimento.setValorPago(atendimento.getTotalAtendimento());
+			}
+			
 			atendimento.setObservacao(observacao);
 			this.service.salvar(atendimento);
 			return "redirect:/atendimentos/listar/" + atendimento.getCliente().getId();
