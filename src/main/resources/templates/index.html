@@ -20,7 +20,164 @@
         </div>
     </header>
     
-    <section th:replace="fragments/footer :: footer"></section>
+    <section class="mt-3">
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-4">
+                    <div class="card text-center bg-primary text-white mb-3">
+                        <div class="card-body">
+                            <h3>Atendimentos do dia</h3>
+                            <h4 class="display-4">3</h4>
+                            <a href="/atendimentos/listar/hoje" class="btn btn-outline-light btn-sm">
+                                Visualizar
+                            </a>
+                        </div>
+                    </div>
+    			</div>
+    			<div class="col-4">
+                    <div class="card text-center bg-success text-white mb-3">
+                        <div class="card-body">
+                            <h3>Atendimentos do mês</h3>
+                            <h4 class="display-4">11</h4>
+                            <a href="/atendimentos/consultar" class="btn btn-outline-light btn-sm">
+                                Visualizar
+                            </a>
+                        </div>
+                    </div>
+    			</div>
+    			<div class="col-4">
+                    <div class="card text-center bg-warning text-white mb-3">
+                        <div class="card-body">
+                            <h3>Total de atendimentos</h3>
+                            <h4 class="display-4">70</h4>
+                            <a href="/atendimentos/consultar" class="btn btn-outline-light btn-sm">
+                                Visualizar
+                            </a>
+                        </div>
+                    </div>
+    			</div>
+    		</div>
+    	</div>
+    </section>
+    
+    <section class="mt-3">
+    	<div class="container">
+    		<div class="row">
+    			<div class="col">
+                    <div class="card">
+                    	<div class="card-header bg-secondary text-white ">
+                    		<h5>Aniversariantes da semana</h5>
+                    	</div>
+                        <div class="card-body">
+		                    <table class="table table-sm table-borderless table-striped table-hover align-middle">
+		                        <thead>
+		                            <tr>
+		                                <th>Nome</th>
+		                                <th>Data de Nascimento</th>
+		                                <th></th>
+		                            </tr>
+		                        </thead>
+		                        <tbody>
+		                            <tr>
+		                                <td>Fulano de tal</td>
+		                                <td>dd/mm/yyyy</td>
+		                                <td>
+            		                      	<button class="btn btn-outline-success" type="submit" id="button-addon2">
+		                      					<i class="fa fa-search"></i>
+		                      				</button>
+		                                </td>
+		                            </tr>
+		                            <tr>
+		                                <td>Siclano de bertranel</td>
+		                                <td>dd/mm/yyyy</td>
+		                                <td>
+            		                      	<button class="btn btn-outline-success" type="submit" id="button-addon2">
+		                      					<i class="fa fa-search"></i>
+		                      				</button>
+		                                </td>
+		                            </tr>	
+		                            	                            		                            <tr>
+		                                <td>Siclano de bertranel</td>
+		                                <td>dd/mm/yyyy</td>
+		                                <td>
+            		                      	<button class="btn btn-outline-success" type="submit" id="button-addon2">
+		                      					<i class="fa fa-search"></i>
+		                      				</button>
+		                                </td>
+		                            </tr>		
+		                            		                            <tr>
+		                                <td>Siclano de bertranel</td>
+		                                <td>dd/mm/yyyy</td>
+		                                <td>
+            		                      	<button class="btn btn-outline-success" type="submit" id="button-addon2">
+		                      					<i class="fa fa-search"></i>
+		                      				</button>
+		                                </td>
+		                            </tr>		
+		                            		                            <tr>
+		                                <td>Siclano de bertranel</td>
+		                                <td>dd/mm/yyyy</td>
+		                                <td>
+            		                      	<button class="btn btn-outline-success" type="submit" id="button-addon2">
+		                      					<i class="fa fa-search"></i>
+		                      				</button>
+		                                </td>
+		                            </tr>		
+		                        </tbody>
+                    		</table>
+                        </div>
+                    </div>
+    			</div>
+    		</div>
+    	</div>
+    </section>    
+    
+    <section class="my-3">
+    	<div class="container">
+    		<div class="row">
+    			<div class="col">
+                    <div class="card">
+                    	<div class="card-header bg-secondary text-white ">
+                    		<h5>Aniversariantes do mês</h5>
+                    	</div>
+                        <div class="card-body">
+		                    <table class="table table-sm table-borderless table-striped table-hover align-middle">
+		                        <thead>
+		                            <tr>
+		                                <th>Nome</th>
+		                                <th>Data de Nascimento</th>
+		                                <th></th>
+		                            </tr>
+		                        </thead>
+		                        <tbody>
+		                            <tr>
+		                                <td>Fulano de tal</td>
+		                                <td>dd/mm/yyyy</td>
+		                                <td>
+            		                      	<button class="btn btn-outline-success" type="submit" id="button-addon2">
+		                      					<i class="fa fa-search"></i>
+		                      				</button>
+		                                </td>
+		                            </tr>
+		                            <tr>
+		                                <td>Siclano de bertranel</td>
+		                                <td>dd/mm/yyyy</td>
+		                                <td>
+            		                      	<button class="btn btn-outline-success" type="submit" id="button-addon2">
+		                      					<i class="fa fa-search"></i>
+		                      				</button>
+		                                </td>
+		                            </tr>		                            
+		                        </tbody>
+                    		</table>
+                        </div>
+                    </div>
+    			</div>
+    		</div>
+    	</div>
+    </section>  
+        
+    <section th:replace="fragments/non-fixed-footer :: footer"></section>
 
     <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
    </body>

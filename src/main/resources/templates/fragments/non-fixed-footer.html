@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <title th:text="#{application.messages.title}">Mi & Ci</title>
+        <link rel="stylesheet" th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.css}">
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+        <link rel="stylesheet" th:href="@{/css/main.css}">
+    </head>
+    <body>
+    
+    <section id="main-footer" class="bg-dark text-white mt-0 p-1 bottom" th:fragment="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <p class="text-center" th:text="#{application.messages.title}">
+                        Mi & Ci
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    </body>
+</html>
+
