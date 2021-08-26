@@ -3,6 +3,7 @@ package com.mici.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -16,6 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.mici.builders.AtendimentoBuilder;
 import com.mici.entity.Atendimento;
+import com.mici.repository.AtendimentoRepository;
 import com.mici.repository.FormaPagamentoRepository;
 
 @ActiveProfiles("tests")
@@ -27,6 +29,9 @@ class AtendimentoServiceTest {
 	
 	@Autowired
 	AtendimentoService atendimentoService;
+	
+	@Autowired
+	AtendimentoRepository atendimentoRepository;
 	
 	@Autowired
 	ServicoService servicoService;
@@ -66,7 +71,7 @@ class AtendimentoServiceTest {
 		Atendimento atendimento = new AtendimentoBuilder()
 									.pago()
 									.doCliente(clienteService.findById(1))
-									.hoje()
+									.deHoje()
 									.comFormaDePagamento(formaPgtoRepo.findById(2).get())
 									.comObservacao("Novo Atendimento")
 									.comItemAtendimento()
@@ -99,7 +104,7 @@ class AtendimentoServiceTest {
 		Atendimento atendimento1 = new AtendimentoBuilder()
 				.pago()
 				.doCliente(clienteService.findById(1))
-				.hoje()
+				.deHoje()
 				.comFormaDePagamento(formaPgtoRepo.findById(2).get())
 				.comObservacao("Novo Atendimento 1")
 				.comItemAtendimento()
@@ -111,7 +116,7 @@ class AtendimentoServiceTest {
 		Atendimento atendimento2 = new AtendimentoBuilder()
 				.pago()
 				.doCliente(clienteService.findById(2))
-				.hoje()
+				.deHoje()
 				.comFormaDePagamento(formaPgtoRepo.findById(2).get())
 				.comObservacao("Novo Atendimento 2")
 				.comItemAtendimento()
@@ -147,7 +152,7 @@ class AtendimentoServiceTest {
 				.pago()
 				.naoCortesia()
 				.doCliente(clienteService.findById(1))
-				.hoje()
+				.deHoje()
 				.comFormaDePagamento(formaPgtoRepo.findById(2).get())
 				.comObservacao("Novo Atendimento 1")
 				.comItemAtendimento()
@@ -160,7 +165,7 @@ class AtendimentoServiceTest {
 				.naoPago()
 				.naoCortesia()
 				.doCliente(clienteService.findById(2))
-				.hoje()
+				.deHoje()
 				.comFormaDePagamento(formaPgtoRepo.findById(2).get())
 				.comObservacao("Novo Atendimento 2")
 				.comItemAtendimento()
@@ -173,7 +178,7 @@ class AtendimentoServiceTest {
 				.naoPago()
 				.cortesia()
 				.doCliente(clienteService.findById(2))
-				.hoje()
+				.deHoje()
 				.comFormaDePagamento(formaPgtoRepo.findById(2).get())
 				.comObservacao("Novo Atendimento 3")
 				.comItemAtendimento()
@@ -190,6 +195,71 @@ class AtendimentoServiceTest {
 		assertThat(naoPagos.size()).isEqualTo(1);
 		assertThat(naoPagos.get(0).getObservacao()).isEqualTo("Novo Atendimento 2");
 		
+	}
+	
+	
+	@Test
+	void deveRetornarTotalCorretoDeAtendimentosDoDia() {
+		var atendimento1 = new AtendimentoBuilder()
+			.pago()
+			.deOntem()
+			.doCliente(clienteService.findById(1))
+			.comObservacao("Atendimento 1")
+			.build();
+		var atendimento2 = new AtendimentoBuilder()
+			.cortesia()
+			.naoPago()
+			.deHoje()
+			.doCliente(clienteService.findById(2))
+			.comObservacao("Atendimento 2")
+			.build();
+		var atendimento3 = new AtendimentoBuilder()
+			.pago()
+			.doDia("2021-08-20")
+			.doCliente(clienteService.findById(1))
+			.comObservacao("Atendimento 3")
+			.build();
+		
+		List.of(atendimento1, atendimento2, atendimento3).forEach(a -> atendimentoService.salvar(a));
+		Long total = atendimentoService.countTotalAtendimentosDeHoje();
+		assertThat(total).isEqualTo(1);
+	}
+	
+	
+	@Test
+	void deveRetornarTotalCorretoDeAtendimentoDaSemana() {
+		List.of(
+				new AtendimentoBuilder()
+					.cortesia()
+					.doDia("2021-08-26")
+					.doCliente(clienteService.findById(2))
+					.comObservacao("Atendimento 1")
+					.build(),
+				new AtendimentoBuilder()
+					.cortesia()
+					.doDia("2021-08-22")
+					.doCliente(clienteService.findById(2))
+					.comObservacao("Atendimento 2")
+					.build(),
+				new AtendimentoBuilder()
+					.cortesia()
+					.doDia("2021-08-23")
+					.doCliente(clienteService.findById(2))
+					.comObservacao("Atendimento 3")
+					.build(),
+				new AtendimentoBuilder()
+					.cortesia()
+					.doDia("2021-08-21")
+					.doCliente(clienteService.findById(2))
+					.comObservacao("Atendimento 1")
+					.build()		
+		).forEach(atendimento -> atendimentoService.salvar(atendimento));
+		
+		var dataFinal = LocalDate.parse("2021-08-26");
+		var dataInicial = dataFinal.minusDays(dataFinal.getDayOfWeek().getValue());
+		
+		var totalAtendimentos = atendimentoRepository.countByDiaDoAtendimentoBetween(dataInicial, dataFinal);
+		assertThat(totalAtendimentos).isEqualTo(3);
 	}
 
 }

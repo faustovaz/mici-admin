@@ -27,7 +27,7 @@
                     <div class="card text-center bg-primary text-white mb-3">
                         <div class="card-body">
                             <h3>Atendimentos do dia</h3>
-                            <h4 class="display-4">3</h4>
+                            <h4 class="display-4" th:text=${dashboard.totalAtendimentosDia}>0</h4>
                             <a href="/atendimentos/listar/hoje" class="btn btn-outline-light btn-sm">
                                 Visualizar
                             </a>
@@ -37,8 +37,8 @@
     			<div class="col-4">
                     <div class="card text-center bg-success text-white mb-3">
                         <div class="card-body">
-                            <h3>Atendimentos do mês</h3>
-                            <h4 class="display-4">11</h4>
+                            <h3>Atendimentos do semana</h3>
+                            <h4 class="display-4" th:text=${dashboard.totalAtendimentosSemana}>0</h4>
                             <a href="/atendimentos/consultar" class="btn btn-outline-light btn-sm">
                                 Visualizar
                             </a>
@@ -49,7 +49,7 @@
                     <div class="card text-center bg-warning text-white mb-3">
                         <div class="card-body">
                             <h3>Total de atendimentos</h3>
-                            <h4 class="display-4">70</h4>
+                            <h4 class="display-4" th:text=${dashboard.totalAtendimentos}>0</h4>
                             <a href="/atendimentos/consultar" class="btn btn-outline-light btn-sm">
                                 Visualizar
                             </a>
@@ -69,7 +69,11 @@
                     		<h5>Aniversariantes da semana</h5>
                     	</div>
                         <div class="card-body">
-		                    <table class="table table-sm table-borderless table-striped table-hover align-middle">
+                        	<div class="alert alert-secondary" role="alert" th:if="${#lists.isEmpty(dashboard.aniversariantesDaSemana)}">
+                        		Não há aniversáriantes nessa semana
+                        	</div>
+		                    <table class="table table-sm table-borderless table-striped table-hover align-middle" 
+		                    		th:if="${not #lists.isEmpty(dashboard.aniversariantesDaSemana)}">
 		                        <thead>
 		                            <tr>
 		                                <th>Nome</th>
@@ -78,51 +82,15 @@
 		                            </tr>
 		                        </thead>
 		                        <tbody>
-		                            <tr>
-		                                <td>Fulano de tal</td>
-		                                <td>dd/mm/yyyy</td>
-		                                <td>
-            		                      	<button class="btn btn-outline-success" type="submit" id="button-addon2">
-		                      					<i class="fa fa-search"></i>
-		                      				</button>
+		                            <tr th:each="cliente : ${dashboard.aniversariantesDaSemana}">
+		                                <td th:text="${cliente.nome}"></td>
+		                                <td th:text="${#dates.format(cliente.dataNascimentoAsDate, 'dd/MM/yyyy')}"></td>
+		                                <td class='text-end'>
+		           	                       	<a th:href="@{'/clientes/editar/' + ${cliente.id}}" class="btn btn-primary">
+		                                        <i class="fa fa-search"></i>
+		                                    </a>
 		                                </td>
 		                            </tr>
-		                            <tr>
-		                                <td>Siclano de bertranel</td>
-		                                <td>dd/mm/yyyy</td>
-		                                <td>
-            		                      	<button class="btn btn-outline-success" type="submit" id="button-addon2">
-		                      					<i class="fa fa-search"></i>
-		                      				</button>
-		                                </td>
-		                            </tr>	
-		                            	                            		                            <tr>
-		                                <td>Siclano de bertranel</td>
-		                                <td>dd/mm/yyyy</td>
-		                                <td>
-            		                      	<button class="btn btn-outline-success" type="submit" id="button-addon2">
-		                      					<i class="fa fa-search"></i>
-		                      				</button>
-		                                </td>
-		                            </tr>		
-		                            		                            <tr>
-		                                <td>Siclano de bertranel</td>
-		                                <td>dd/mm/yyyy</td>
-		                                <td>
-            		                      	<button class="btn btn-outline-success" type="submit" id="button-addon2">
-		                      					<i class="fa fa-search"></i>
-		                      				</button>
-		                                </td>
-		                            </tr>		
-		                            		                            <tr>
-		                                <td>Siclano de bertranel</td>
-		                                <td>dd/mm/yyyy</td>
-		                                <td>
-            		                      	<button class="btn btn-outline-success" type="submit" id="button-addon2">
-		                      					<i class="fa fa-search"></i>
-		                      				</button>
-		                                </td>
-		                            </tr>		
 		                        </tbody>
                     		</table>
                         </div>
@@ -141,7 +109,11 @@
                     		<h5>Aniversariantes do mês</h5>
                     	</div>
                         <div class="card-body">
-		                    <table class="table table-sm table-borderless table-striped table-hover align-middle">
+                        	<div class="alert alert-secondary" role="alert" th:if="${#lists.isEmpty(dashboard.aniversariantesDoMes)}">
+                        		Não há aniversáriantes nessa semana
+                        	</div>                        
+		                    <table class="table table-sm table-borderless table-striped table-hover align-middle" 
+		                    		th:if="${not #lists.isEmpty(dashboard.aniversariantesDoMes)}">
 		                        <thead>
 		                            <tr>
 		                                <th>Nome</th>
@@ -150,24 +122,15 @@
 		                            </tr>
 		                        </thead>
 		                        <tbody>
-		                            <tr>
-		                                <td>Fulano de tal</td>
-		                                <td>dd/mm/yyyy</td>
-		                                <td>
-            		                      	<button class="btn btn-outline-success" type="submit" id="button-addon2">
-		                      					<i class="fa fa-search"></i>
-		                      				</button>
+		                            <tr th:each="cliente : ${dashboard.aniversariantesDoMes}">
+		                                <td th:text="${cliente.nome}"></td>
+		                                <td th:text="${#dates.format(cliente.dataNascimentoAsDate, 'dd/MM/yyyy')}"></td>
+		                                <td class='text-end'>
+		           	                       	<a th:href="@{'/clientes/editar/' + ${cliente.id}}" class="btn btn-primary">
+		                                        <i class="fa fa-search"></i>
+		                                    </a>
 		                                </td>
 		                            </tr>
-		                            <tr>
-		                                <td>Siclano de bertranel</td>
-		                                <td>dd/mm/yyyy</td>
-		                                <td>
-            		                      	<button class="btn btn-outline-success" type="submit" id="button-addon2">
-		                      					<i class="fa fa-search"></i>
-		                      				</button>
-		                                </td>
-		                            </tr>		                            
 		                        </tbody>
                     		</table>
                         </div>

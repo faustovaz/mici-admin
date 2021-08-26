@@ -11,7 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.mici.entity.FormaPagamento;
 
-@ActiveProfiles("test")
+@ActiveProfiles("tests")
 @SpringBootTest
 class FormaPagamentoRepositoryTest {
 	

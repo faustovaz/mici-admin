@@ -1,7 +1,10 @@
 package com.mici.service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -37,6 +40,32 @@ public class ClienteService {
 	
 	public List<Cliente> findByName(String name) {
 		return this.repository.findByNameContainingIgnoreCase(name);
+	}
+
+	public List<Cliente> getAniversariantesDaSemana(LocalDate dataInicial) {
+		var dataFinal = dataInicial.plusDays(8);
+		var totalAniversariantes = repository.getAniversariantesDoMes(dataInicial.getMonthValue());
+		var aniversariantes = new ArrayList<Cliente>();
+		
+		if(dataInicial.getMonth() != dataFinal.getMonth()) {
+			totalAniversariantes.addAll(repository.getAniversariantesDoMes(dataFinal.getMonthValue()));
+		}
+		
+		dataInicial.datesUntil(dataFinal).forEach(data -> {
+			aniversariantes.addAll(
+				totalAniversariantes
+				.stream()
+				.filter(cliente -> cliente.getDataNascimento().getDayOfMonth() == data.getDayOfMonth())
+				.collect(Collectors.toList())
+			);
+		});
+		
+		return aniversariantes;
+	}
+
+	public List<Cliente> getAniversariantesDoMesAtual() {
+		var hoje = LocalDate.now();
+		return repository.getAniversariantesDoMes(hoje.getMonthValue());
 	}
 	
 }

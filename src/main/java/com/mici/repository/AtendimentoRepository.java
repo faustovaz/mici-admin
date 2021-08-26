@@ -21,4 +21,5 @@ public interface AtendimentoRepository extends JpaRepository<Atendimento, Intege
 
 	List<Atendimento> findByDiaDoAtendimentoBetween(LocalDate inicio, LocalDate fim, Sort by);
 
+	Long countByDiaDoAtendimentoBetween(LocalDate start, LocalDate end);
 }

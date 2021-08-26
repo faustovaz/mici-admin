@@ -28,8 +28,14 @@ public class AtendimentoBuilder  {
 		return this;
 	}
 	
-	public AtendimentoBuilder hoje() {
+	public AtendimentoBuilder deHoje() {
 		this.atendimento.setDiaDoAtendimento(LocalDate.now());
+		return this;
+	}
+	
+	public AtendimentoBuilder doDia(String dia) {
+		var data = LocalDate.parse(dia);
+		this.atendimento.setDiaDoAtendimento(data);
 		return this;
 	}
 	

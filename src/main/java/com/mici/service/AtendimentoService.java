@@ -53,4 +53,19 @@ public class AtendimentoService {
 		return this.atendimentoRepository.findByDiaDoAtendimentoBetween(inicio, fim, Sort.by(Direction.DESC, "id"));
 	}
 
+	public Long countTotalAtendimentos() {
+		return this.atendimentoRepository.count();
+	}
+
+	public Long countTotalAtendimentosDaSemana() {
+		var hoje = LocalDate.now();
+		var primeiroDiaDaSemana = hoje.minusDays(hoje.getDayOfWeek().getValue());
+		return this.atendimentoRepository.countByDiaDoAtendimentoBetween(primeiroDiaDaSemana, hoje);
+	}
+
+	public Long countTotalAtendimentosDeHoje() {
+		var hoje = LocalDate.now();
+		return this.atendimentoRepository.countByDiaDoAtendimentoBetween(hoje, hoje);
+	}
+
 }
