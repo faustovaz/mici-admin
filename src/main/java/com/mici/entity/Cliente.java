@@ -37,6 +37,9 @@ public class Cliente {
 	@Column(name = "data_nascimento")
 	private LocalDate dataNascimento;
 	
+	@Column(name = "criado_por")
+	private String criadoPor;
+	
 	private String telefone;
 	
 	private String observacao;

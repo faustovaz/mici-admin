@@ -70,6 +70,9 @@ public class Atendimento {
 	@Column(name = "ultima_atualizacao")
 	private LocalDateTime ultimaAtualizacao;
 	
+	@Column(name = "criado_por")
+	private String criadoPor;
+	
 	public void adicionarItemAtendimento(ItemAtendimento itemAtendimento){
 		if (Objects.isNull(itensAtendimento)) {
 			this.itensAtendimento = new ArrayList<>();

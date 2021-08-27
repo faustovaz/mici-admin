@@ -2,6 +2,7 @@ package com.mici.controller;
 
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +25,7 @@ public class ClientesController {
 	}
 	
 	@GetMapping("form")
-	public String formServicos(Model model) {
+	public String formClientes(Model model) {
 		model.addAttribute("cliente", new Cliente());
 		model.addAttribute("titulo_form", "Cadastrar novo Cliente");
 		model.addAttribute("texto_botao", "Cadastrar");
@@ -32,7 +33,8 @@ public class ClientesController {
 	}
 	
 	@PostMapping("cadastrar")
-	public String cadastrarServico(Cliente cliente, Model model) {
+	public String cadastrarCliente(Cliente cliente, Model model, Authentication auth) {
+		cliente.setCriadoPor(auth.getName());
 		this.service.save(cliente);
 		model.addAttribute("mensagemSucesso", "Cliente salvo com sucesso!");
 		model.addAttribute("clientes", this.service.findAll());
@@ -40,7 +42,7 @@ public class ClientesController {
 	}
 	
 	@GetMapping("editar/{idCliente}")
-	public String editarServico(@PathVariable("idCliente") Integer id, Model model) {
+	public String editarCliente(@PathVariable("idCliente") Integer id, Model model) {
 		model.addAttribute("cliente", this.service.findById(id));
 		model.addAttribute("titulo_form", "Alterar");
 		model.addAttribute("texto_botao", "Alterar");		

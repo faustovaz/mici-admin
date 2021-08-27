@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -57,10 +58,11 @@ public class AgendaController {
 	
 	@ResponseBody
 	@PostMapping
-	public ResponseEntity<Agendamento> agendar(@Valid @RequestBody Agendamento agenda, BindingResult result) {
+	public ResponseEntity<Agendamento> agendar(@Valid @RequestBody Agendamento agenda, BindingResult result, Authentication auth) {
 		if (result.hasErrors()) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+		agenda.setCriadoPor(auth.getName());
 		return new ResponseEntity<>(this.service.agendar(agenda), HttpStatus.OK);
 	}
 	

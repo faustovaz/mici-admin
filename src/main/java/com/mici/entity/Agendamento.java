@@ -39,6 +39,9 @@ public class Agendamento {
 	@Column(name = "data_agendamento")
 	private LocalDateTime agendamento;
 	
+	@Column(name = "criado_por")
+	private String criadoPor;
+	
 	public static Agendamento from(String cliente, String lembrete, String date, String time) {
 		var dataAgendamento = LocalDateTime.parse(String.format("%sT%s", date, time));
 		var a = new Agendamento();

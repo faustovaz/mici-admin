@@ -8,6 +8,7 @@ create table atendimentos(
 	valor_pago real,
 	id_cliente integer,
 	cortesia integer,
-	ultima_atualizacao text
+	ultima_atualizacao text,
+	criado_por text
 );
 

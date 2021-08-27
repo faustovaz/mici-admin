@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -68,9 +69,10 @@ public class AtendimentoController {
 	
 	
 	@PostMapping("cadastrar")
-	public String cadastrar(AtendimentoForm form) {
+	public String cadastrar(AtendimentoForm form, Authentication auth) {
 		try {
 			Atendimento atendimento = this.atendimentoTranformer.transform(form);
+			atendimento.setCriadoPor(auth.getName());
 			this.service.salvar(atendimento);
 			return "redirect:/atendimentos/listar/" + form.getIdCliente();
 		}
@@ -95,13 +97,15 @@ public class AtendimentoController {
 			@RequestParam("formaPgto") Integer formaPagamento,
 			@RequestParam(required = false, name = "valorPago") BigDecimal valorPago,
 			@RequestParam("atendimentoObservacao") String observacao,
-			@RequestParam("idAtendimento") Integer idAtendimento) {
+			@RequestParam("idAtendimento") Integer idAtendimento,
+			Authentication auth) {
 		try {
 			Optional<Atendimento> atendimentoOp = this.service.findById(idAtendimento);
 			if(atendimentoOp.isEmpty())
 				return "404";
 			
 			Atendimento atendimento = atendimentoOp.get();
+			atendimento.setCriadoPor(auth.getName());
 			atendimento.setCortesia(cortesia);
 			atendimento.setPagamentoRealizado(!Objects.isNull(pagamentoRealizado) && pagamentoRealizado ? true : false);
 			

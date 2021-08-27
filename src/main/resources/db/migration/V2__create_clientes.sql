@@ -3,5 +3,6 @@ create table clientes(
 	nome text,
 	data_nascimento text,
 	telefone text,
-	observacao text 
+	observacao text,
+	criado_por text
 );
