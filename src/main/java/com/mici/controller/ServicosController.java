@@ -2,6 +2,7 @@ package com.mici.controller;
 
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,20 +47,21 @@ public class ServicosController {
 	}
 	
 	@GetMapping("remover/{idServico}")
-	public String remover(@PathVariable("idServico") Integer id, Model model) {
-		this.service.remover(id);	
+	public String remover(@PathVariable("idServico") Integer id, Model model, Authentication auth) {
+		this.service.remover(id, auth.getName());	
 		model.addAttribute("servicos", this.service.findAll());
 		model.addAttribute("mensagemSucesso", "Serviço removido!");
 		return "servicos/listar_servicos";
 	}
 	
 	@PostMapping("cadastrar")
-	public String cadastrarServico(Servico servico, Model model) {
+	public String cadastrarServico(Servico servico, Model model, Authentication auth) {
 		try {
 			model.addAttribute("mensagemSucesso", "Serviço salvo com sucesso!");
 			model.addAttribute("servico", new Servico());
 			model.addAttribute("titulo_form", "Cadastrar novo Serviço");
 			model.addAttribute("texto_botao", "Cadastrar");
+			servico.setCriadoPor(auth.getName());
 			this.service.salvar(servico);
 		}
 		catch(IllegalArgumentException e) {

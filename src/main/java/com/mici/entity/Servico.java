@@ -2,6 +2,7 @@ package com.mici.entity;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,6 +25,8 @@ public class Servico {
 	private String nome;
 	private BigDecimal preco;
 	private Boolean removido = false;
+	@Column(name = "criado_por")
+	private String criadoPor;
 	
 	public void setAsRemovido() {
 		this.removido = true;

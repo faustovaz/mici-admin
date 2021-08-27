@@ -33,10 +33,11 @@ public class ServicoService {
 		return servico.isPresent() ? servico.get() : new Servico();
 	}
 
-	public void remover(Integer id) {
+	public void remover(Integer id, String usuario) {
 		var servico = this.findById(id);
 		if (Objects.nonNull(servico.getId())) {
 			servico.setAsRemovido();
+			servico.setCriadoPor(usuario);
 			this.salvar(servico);
 		}
 	}
