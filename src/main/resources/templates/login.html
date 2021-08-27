@@ -19,7 +19,6 @@
   								Usuário ou senha inválidos.
   							</div>
     						<form th:action="@{/login}" method="post">	
-    							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     							<div class="input-group mb-3">
   									<span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
   									<input type="text" class="form-control" placeholder="Usuário" name="username" id="username">
