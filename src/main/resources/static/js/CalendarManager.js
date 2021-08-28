@@ -9,6 +9,10 @@ class CalendarManager {
     this.inputScheduledTime= document.querySelector("#horario");
     this.inputCustomerName = document.querySelector("#cliente");
     this.inputReminder = document.querySelector("#lembrete");
+	this.token = document.querySelector("meta[name='_csrf']").getAttribute("content");
+	this.header = document.querySelector("meta[name='_csrf_header']").getAttribute("content");  
+	console.log(this.token);
+	console.log(this.header);  
     this.service = new CalendarService();
     this.listOfDays = [
         'Domingo',
@@ -70,7 +74,7 @@ class CalendarManager {
       try {
         this.hideAlertMsgs();
         const dataToBeSent = this.checkAndFetchFormData();
-        this.service.sendScheduledDate(dataToBeSent, () => {
+        this.service.sendScheduledDate(dataToBeSent, this.header, this.token, () => {
           this.showMessage("#modalSuccessMsg", "Dados salvos com sucesso!");
           this.cleanAllFields();
           this.setFocusOn("#cliente");

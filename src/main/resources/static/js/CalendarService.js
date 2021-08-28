@@ -29,10 +29,10 @@ export class CalendarService {
   }
 
 
-  sendScheduledDate(dataToBeSent, successHandler, errorHandler) {
+  sendScheduledDate(dataToBeSent, header, token, successHandler, errorHandler) {
     fetch(CalendarService.URL, {
       method: 'POST',
-      headers: {"Content-Type": "application/json"},
+      headers: {"Content-Type": "application/json", "X-CSRF-TOKEN": token},
       body: JSON.stringify(dataToBeSent)
     }).then((r) => {
       if(r.ok) {

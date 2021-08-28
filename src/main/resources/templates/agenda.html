@@ -7,6 +7,8 @@
         <link rel="stylesheet" th:href="@{/css/CalendarPicker.style.css}">
         <link rel="stylesheet" href='/css/main.css'>
         <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+        <meta name="_csrf" th:content="${_csrf.token}"/>
+		<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     </head>
     <body>
     <nav th:replace="fragments/top_menu :: top_menu"></nav>
