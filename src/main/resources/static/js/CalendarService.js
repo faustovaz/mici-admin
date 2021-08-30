@@ -29,10 +29,12 @@ export class CalendarService {
   }
 
 
-  sendScheduledDate(dataToBeSent, header, token, successHandler, errorHandler) {
+  sendScheduledDate(dataToBeSent, tokenName, tokenValue, successHandler, errorHandler) {
+	let headerValues = {"Content-Type": "application/json"};
+	headerValues[`${tokenName}`] =  tokenValue;
     fetch(CalendarService.URL, {
       method: 'POST',
-      headers: {"Content-Type": "application/json", "X-CSRF-TOKEN": token},
+      headers: headerValues,
       body: JSON.stringify(dataToBeSent)
     }).then((r) => {
       if(r.ok) {
@@ -44,9 +46,13 @@ export class CalendarService {
   }
 
 
-  deleteScheduledDate(scheduleId, successHandler, errorHandler) {
+  deleteScheduledDate(scheduleId, tokenName, tokenValue, successHandler, errorHandler) {
+	let headerValues = {"Content-Type": "application/json"};
+	headerValues[`${tokenName}`] =  tokenValue;
+	
     const request = fetch(`${CalendarService.URL}/${scheduleId}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: headerValues
     });
     request.then(response => {
       if(response.ok) {

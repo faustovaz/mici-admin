@@ -185,7 +185,6 @@ class Atendimentos {
 
   
   updateServicosIds() {
-	console.log("uhet");
 	let id = 0;
 	const servicosElements = Array.from(document.querySelectorAll("[data-container]"));
 	servicosElements.forEach(s => {
