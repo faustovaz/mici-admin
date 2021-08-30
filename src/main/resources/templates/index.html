@@ -70,7 +70,7 @@
                     	</div>
                         <div class="card-body">
                         	<div class="alert alert-secondary" role="alert" th:if="${#lists.isEmpty(dashboard.aniversariantesDaSemana)}">
-                        		Não há aniversáriantes nessa semana
+                        		Não há aniversáriantes nessa semana.
                         	</div>
 		                    <table class="table table-sm table-borderless table-striped table-hover align-middle" 
 		                    		th:if="${not #lists.isEmpty(dashboard.aniversariantesDaSemana)}">
@@ -110,7 +110,7 @@
                     	</div>
                         <div class="card-body">
                         	<div class="alert alert-secondary" role="alert" th:if="${#lists.isEmpty(dashboard.aniversariantesDoMes)}">
-                        		Não há aniversáriantes nessa semana
+                        		Não há aniversáriantes nesse mês.
                         	</div>                        
 		                    <table class="table table-sm table-borderless table-striped table-hover align-middle" 
 		                    		th:if="${not #lists.isEmpty(dashboard.aniversariantesDoMes)}">
