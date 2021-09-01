@@ -7,25 +7,17 @@ import com.mici.entity.Atendimento;
 import com.mici.entity.Cliente;
 import com.mici.entity.FormaPagamento;
 import com.mici.entity.ItemAtendimento;
+import com.mici.entity.PagamentoAtendimento;
 import com.mici.entity.Servico;
 
 public class AtendimentoBuilder  {
 
 	private Atendimento atendimento;
 	private ItemAtendimentoBuilder itemAtendimentoBuilder;
+    private PagamentoAtendimentoBuilder pagamentoAtendimentoBuilder;
 	
 	public AtendimentoBuilder() {
 		this.atendimento = new Atendimento();
-	}
-	
-	public AtendimentoBuilder pago() {
-		this.atendimento.setPagamentoRealizado(true);
-		return this;
-	}
-	
-	public AtendimentoBuilder naoPago() {
-		this.atendimento.setPagamentoRealizado(false);
-		return this;
 	}
 	
 	public AtendimentoBuilder deHoje() {
@@ -39,13 +31,13 @@ public class AtendimentoBuilder  {
 		return this;
 	}
 	
-	public AtendimentoBuilder cortesia() {
-		this.atendimento.setCortesia(true);
+	public AtendimentoBuilder seraCobrado() {
+		this.atendimento.setSeraCobrado(true);
 		return this;
 	}
 	
-	public AtendimentoBuilder naoCortesia() {
-		this.atendimento.setCortesia(false);
+	public AtendimentoBuilder naoSeraCobrado() {
+		this.atendimento.setSeraCobrado(false);
 		return this;
 	}
 	
@@ -66,11 +58,6 @@ public class AtendimentoBuilder  {
 		return this;
 	}
 	
-	public AtendimentoBuilder comFormaDePagamento(FormaPagamento formaPgto) {
-		this.atendimento.setFormaPagamento(formaPgto);
-		return this;
-	}
-	
 	public ItemAtendimentoBuilder comItemAtendimento() {
 		this.itemAtendimentoBuilder =  new ItemAtendimentoBuilder(this);
 		return this.itemAtendimentoBuilder;
@@ -79,6 +66,16 @@ public class AtendimentoBuilder  {
 	public AtendimentoBuilder addItemAtendimento(ItemAtendimento item) {
 		this.atendimento.adicionarItemAtendimento(item);
 		return this;
+	}
+	
+	public PagamentoAtendimentoBuilder comPagamentoAtendimento() {
+	    this.pagamentoAtendimentoBuilder = new PagamentoAtendimentoBuilder(this);
+	    return this.pagamentoAtendimentoBuilder;
+	}
+	
+	public AtendimentoBuilder addPagamentoAtendimento(PagamentoAtendimento pagamento) {
+	    this.atendimento.adicionarPagamentoAtendimento(pagamento);
+	    return this;
 	}
 
 	public Atendimento build() {
@@ -109,6 +106,42 @@ public class AtendimentoBuilder  {
 			return this.atendimentoBuilder;
 		}
 		
+	}
+	
+	public class PagamentoAtendimentoBuilder {
+	    private PagamentoAtendimento pagamentoAtendimento;
+	    private AtendimentoBuilder atendimentoBuilder;
+	    
+	    public PagamentoAtendimentoBuilder(AtendimentoBuilder builder) {
+	        this.atendimentoBuilder = builder;
+	        this.pagamentoAtendimento = new PagamentoAtendimento();
+        }
+	    
+	    public PagamentoAtendimentoBuilder comValor(BigDecimal valor) {
+	        this.pagamentoAtendimento.setValorPagamento(valor);
+	        return this;
+	    }
+	    
+       public PagamentoAtendimentoBuilder pagoHoje() {
+            this.pagamentoAtendimento.setDiaDoPagamento(LocalDate.now());
+            return this;
+       }
+       
+       public PagamentoAtendimentoBuilder pagoOntem() {
+           this.pagamentoAtendimento.setDiaDoPagamento(LocalDate.now().minusDays(1));
+           return this;
+       }
+       
+       public PagamentoAtendimentoBuilder comFormaPagamento(FormaPagamento formaPagamento) {
+           this.pagamentoAtendimento.setFormaPagamento(formaPagamento);
+           return this;
+       }
+       
+       public AtendimentoBuilder build() {
+           this.atendimentoBuilder.addPagamentoAtendimento(pagamentoAtendimento);   
+           return this.atendimentoBuilder;
+       }
+	    
 	}
 }
 

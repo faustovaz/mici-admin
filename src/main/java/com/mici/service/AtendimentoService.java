@@ -46,7 +46,7 @@ public class AtendimentoService {
 	}
 
 	public List<Atendimento> findAllNaoPagos() {
-		return this.atendimentoRepository.findAllByPagamentoRealizadoFalseAndCortesiaFalse(Sort.by(Direction.DESC, "id"));
+		return this.atendimentoRepository.findAllBySeraCobradoTrueAndPagamentoRealizadoFalse(Sort.by(Direction.DESC, "id"));
 	}
 
 	public List<Atendimento> findByDiaDoAtendimentoBetween(LocalDate inicio, LocalDate fim) {

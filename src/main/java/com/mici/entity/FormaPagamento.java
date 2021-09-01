@@ -16,6 +16,7 @@ public class FormaPagamento {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
 	private String nome;
 	
 }

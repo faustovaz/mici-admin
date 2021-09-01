@@ -12,12 +12,12 @@ import lombok.Data;
 public class AtendimentoForm {
 	private String idCliente;
 	private List<ServicoForm> servicos;
-	private boolean cortesia;
+	private boolean seraCobrado;
+	private boolean cronograma;
 	private String formaPgto;
 	private String atendimentoObservacao;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataAtendimento;
-	private boolean pagamentoRealizado;
 	private BigDecimal valorPago;
 }
 

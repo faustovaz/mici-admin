@@ -3,7 +3,6 @@ package com.mici.controller;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.security.core.Authentication;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mici.entity.Atendimento;
 import com.mici.entity.Cliente;
-import com.mici.entity.FormaPagamento;
 import com.mici.form.AtendimentoForm;
 import com.mici.form.tranformer.AtendimentoFormToAtendimento;
 import com.mici.repository.FormaPagamentoRepository;
@@ -92,7 +90,7 @@ public class AtendimentoController {
 	
 	
 	@PostMapping("atualizar")
-	public String atualizar(@RequestParam("cortesia") boolean cortesia,
+	public String atualizar(@RequestParam("cortesia") boolean seraCobrado,
 			@RequestParam(required = false, name = "pagamentoRealizado") Boolean pagamentoRealizado,
 			@RequestParam("formaPgto") Integer formaPagamento,
 			@RequestParam(required = false, name = "valorPago") BigDecimal valorPago,
@@ -103,23 +101,7 @@ public class AtendimentoController {
 			Optional<Atendimento> atendimentoOp = this.service.findById(idAtendimento);
 			if(atendimentoOp.isEmpty())
 				return "404";
-			
 			Atendimento atendimento = atendimentoOp.get();
-			atendimento.setCriadoPor(auth.getName());
-			atendimento.setCortesia(cortesia);
-			atendimento.setPagamentoRealizado(!Objects.isNull(pagamentoRealizado) && pagamentoRealizado ? true : false);
-			
-			if (formaPagamento > 0) {
-				Optional<FormaPagamento> formaPgtoOp = this.formaPagamentoRepository.findById(formaPagamento);
-				atendimento.setFormaPagamento(formaPgtoOp.isPresent() ? formaPgtoOp.get() : null);
-			}
-			
-			if (!atendimento.isPagamentoRealizado()) {
-				atendimento.setValorPago(valorPago);
-			} else {
-				atendimento.setValorPago(atendimento.getTotalAtendimento());
-			}
-			
 			atendimento.setObservacao(observacao);
 			this.service.salvar(atendimento);
 			return "redirect:/atendimentos/listar/" + atendimento.getCliente().getId();

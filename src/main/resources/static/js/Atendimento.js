@@ -22,21 +22,17 @@ class Atendimentos {
 
 
   bindEvents(containerId, rebindAll) {
-      this.addEventListenerToRemoveServiceButtons(containerId);
-      this.addEventListenerToSelectOptions(containerId);
-      this.addEventListenerToChangePriceValues(containerId);
-      if(rebindAll) {
-    	document.querySelector("#btn-add-servico")
-    		.addEventListener('click', s => this.addNewService());
-		document
-			.querySelectorAll("input[name=cortesia]").forEach(e => {
-				e.addEventListener('click', (evt) => {
-					this._showHideSectionDadosPagamentos(evt.target);
-				});
-			});
-		document.querySelector("#pagamentoRealizado")
-			.addEventListener('click', evt => this.updateValorPago(evt.target));
-	  }
+    this.addEventListenerToRemoveServiceButtons(containerId);
+    this.addEventListenerToSelectOptions(containerId);
+    this.addEventListenerToChangePriceValues(containerId);
+    if(rebindAll) {
+      document.querySelector("#btn-add-servico").addEventListener('click', s => this.addNewService());
+      document.querySelectorAll("input[name=seraCobrado]").forEach(e => {
+        e.addEventListener('click', (evt) => {
+          this._showHideSectionDadosPagamentos(evt.target);
+        });
+      });
+    }
   }
 
 
@@ -203,29 +199,17 @@ class Atendimentos {
   }
     
   
-  _showHideSectionDadosPagamentos(cortesiaRadioButton) {
-	const sectionPgto = document.querySelector("#dados-pagamento");
-	if(cortesiaRadioButton.value === 'false') { // Não é uma cortesia
-		sectionPgto.classList.remove('d-none');
-		sectionPgto.classList.add('d-block');
-	} else {
-		sectionPgto.classList.remove('d-block');
-		sectionPgto.classList.add('d-none');
-	}
+  _showHideSectionDadosPagamentos(seraCobradoRadioButton) {
+    const sectionPgto = document.querySelector("#dados-pagamento");
+    if(seraCobradoRadioButton.value === 'false') { // Não será cobrado
+      sectionPgto.classList.remove('d-block');
+      sectionPgto.classList.add('d-none');
+    } else {
+      sectionPgto.classList.remove('d-none');
+      sectionPgto.classList.add('d-block');
+    }
   }
   
-  updateValorPago(element) {
-	const valorPago = document.querySelector("#valorPago");
-  	if(element.checked){
-		valorPago.value = this._sumTotalAtendimento();
-		valorPago.disabled = true;
-	}
-	else {
-		valorPago.value = '0.00';
-		valorPago.disabled = false;
-	}
-  }
-
 }
 
 new Atendimentos("#services-container");

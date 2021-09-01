@@ -3,10 +3,11 @@ package com.mici.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -36,10 +37,7 @@ public class Atendimento {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	@Column(name = "pagamento_realizado")
-	private boolean pagamentoRealizado;
-	
+		
 	@Convert(converter = SQLiteLocalDateConverter.class)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "dia_do_atendimento")
@@ -51,20 +49,23 @@ public class Atendimento {
 	private BigDecimal valorAtendimento = new BigDecimal(0);
 	
 	@OneToMany(mappedBy = "atendimento", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<ItemAtendimento> itensAtendimento;
+	private Set<ItemAtendimento> itensAtendimento;
 	
-	@ManyToOne
-	@JoinColumn(name = "id_forma_pagamento")
-	private FormaPagamento formaPagamento;
-	
-	@Column(name = "valor_pago")
-	private BigDecimal valorPago;
+	@OneToMany(mappedBy = "atendimento", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<PagamentoAtendimento> pagamentos;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
 	
-	private boolean cortesia;
+	@Column(name = "sera_cobrado")
+	private boolean seraCobrado;
+	
+	@Column(name = "is_cronograma")
+	private boolean cronograma;
+	
+	@Column(name = "pagamento_realizado")
+	private boolean pagamentoRealizado;
 
 	@Convert(converter = SQLiteLocalDateTimeConverter.class)
 	@Column(name = "ultima_atualizacao")
@@ -75,7 +76,7 @@ public class Atendimento {
 	
 	public void adicionarItemAtendimento(ItemAtendimento itemAtendimento){
 		if (Objects.isNull(itensAtendimento)) {
-			this.itensAtendimento = new ArrayList<>();
+			this.itensAtendimento = new HashSet<>();
 		}
 		itemAtendimento.setAtendimento(this);
 		valorAtendimento = valorAtendimento.add(itemAtendimento.getPrecoAplicado());
@@ -97,5 +98,33 @@ public class Atendimento {
 			.reduce(new BigDecimal(0), (total, preco) -> total.add(preco));
 		return pretoAtendimento;
 	}
-	
+
+    public void adicionarPagamentoAtendimento(PagamentoAtendimento pagamento) {
+        if (Objects.isNull(pagamentos)) {
+            this.pagamentos = new HashSet<>();
+        }
+        pagamento.setAtendimento(this);
+        this.pagamentos.add(pagamento);
+        this.updatePagamentoRealizado();
+    }
+    
+    private void updatePagamentoRealizado() {
+        this.setPagamentoRealizado(this.isPago());
+    }
+    
+    public void adicionarPagamentosAtendimento(List<PagamentoAtendimento> pagamentos) {
+        pagamentos.forEach(pagamento -> this.adicionarPagamentoAtendimento(pagamento));
+    }
+    
+    public boolean isPago() {
+        return this.valorAtendimento.equals(this.getValorPago());
+    }
+    
+    public BigDecimal getValorPago() {
+        return this.pagamentos
+                .stream()
+                .map(pagamento -> pagamento.getValorPagamento())
+                .reduce(new BigDecimal(0), (total, value) -> total.add(value));
+    }
+
 }

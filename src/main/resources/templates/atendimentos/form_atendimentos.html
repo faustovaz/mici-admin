@@ -74,7 +74,7 @@
 		                  					<h5>Total do atendimento: <span class="badge bg-secondary" id="total-atendimento">R$ 0.00</span></h5>
 		                				</div>
 		              				</div>
-		              				<div class="row">
+		              				<div class="row mb-3">
                             <div class="col d-flex justify-content-end">
                               <div class="mb-3">
                                 <label class="form-label" for="dataAtendimento">Data do Atendimento</label>
@@ -82,54 +82,58 @@
                               </div>
                             </div>
 		              				</div>
-		              				<div class="row">
-		                				<div class="col d-flex justify-content-end">
-		                  					<div class="mb-3">
-		                  						<span class="me-3">É uma cortesia?</span>
-		                  						<input type="radio" id="cortesia_sim" name="cortesia" value="true" checked> Sim
-		                    					<input class="ms-2" type="radio" id="cortesia_nao" name="cortesia" value="false"> Não
-		                  					</div>
-		                				</div>
-		              				</div>
+                          <div class="row mb-3">
+                            <div class="col d-flex justify-content-end">
+                                <div class="mb-3">
+                                  <span class="me-3">Esse atendimento faz parte de um cronograma?</span>
+                                  <input type="radio" name="cronograma" value="true"> Sim
+                                  <input type="radio" name="cronograma" value="false" class="ms-2" checked> Não
+                                </div>
+                            </div>
+                          </div>		 
+                          <div class="row mb-3">
+                            <div class="col d-flex justify-content-end">
+                                <div class="mb-3">
+                                  <span class="me-3">Esse atendimento será cobrado?</span>
+                                  <input type="radio" name="seraCobrado" value="true"> Sim
+                                  <input type="radio" name="seraCobrado" value="false" class="ms-2" checked> Não
+                                </div>
+                            </div>
+                          </div>                                       				
 		              				<section id="dados-pagamento" class="d-none">
-			              				<div class="row">
-			                				<div class="col d-flex justify-content-end">
-			                  					<div class="mb-3">
-			                    					<input type="checkbox" name="pagamentoRealizado" id="pagamentoRealizado"> Pagamento realizado
-			                  					</div>
-			                				</div>
-			              				</div>
-	    								<div class="row">
-	  										<div class="col d-flex justify-content-end">
-												<div class="mb-3">
-	  												<label for="nome" class="form-label">Forma de Pagamento</label>
-	  												<select class="form-select" name="formaPgto" id="formaPgto" aria-label="Default select example">
-	  													<option selected value="0">Selecione</option>
-														<option th:each="formaPagamento: ${formasPagamento}" th:value="${formaPagamento.id}" th:text="${formaPagamento.nome}">
-	  												</select>
-												</div>
-	  										</div>
-	  									</div>
-										<div class="row">
-	                    					<div class="col d-flex justify-content-end">
-	                    						<div class="mb-3">
-                                        			<label for="valorPago" class="form-label">Valor pago</label>
-                                        			<div class="input-group mb-3">
-                                            			<span class="input-group-text">R$</span>
-                                            			<input value="0.00" type="text" id="valorPago" name="valorPago" class="form-control" required pattern="^[0-9]+[.]?[0-9]+$">
-                                        			</div>
-	                    						</div>
-	                    					</div>
-	                					</div>	 	  									
+		              				  <div class="row mb-3">
+		              				    <div class="col-4 offset-8">
+		              				      <div class="row">
+                                  <div class="col-6">
+                                    <div class="mb-3">
+                                      <label for="preco" class="form-label">Valor pago</label>
+                                        <div class="input-group">
+                                          <span class="input-group-text" id="price-text">R$</span>
+                                          <input type="text" name="valorPago" class="form-control" required pattern="^[0-9]+[.]?[0-9]+$">
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-6">
+                                    <div class="mb-3">
+                                      <label for="nome" class="form-label">Forma de Pagamento</label>
+                                      <select class="form-select" name="formaPgto" id="formaPgto" aria-label="Default select example">
+                                        <option selected value="0">Selecione</option>
+                                        <option th:each="formaPagamento: ${formasPagamento}" th:value="${formaPagamento.id}" th:text="${formaPagamento.nome}">
+                                      </select>
+                                    </div>
+                                  </div>    
+		              				      </div>
+		              				    </div>              				    
+		              				  </div>
 		              				</section>
-									<div class="row">
-                    					<div class="col d-flex justify-content-end">
-	                      					<div class="mb-3">
-	                        					<label for="nome" class="form-label">Observação</label>
-	                    						<textarea name="atendimentoObservacao" id="atendimentoObservacao" cols="30" rows="3" class="form-control"></textarea>
-	                      					</div>
-                    					</div>
-                					</div>
+                          <div class="row">
+                            <div class="col d-flex justify-content-end">
+                              <div class="mb-3">
+                                <label for="nome" class="form-label">Observação</label>
+                                  <textarea name="atendimentoObservacao" id="atendimentoObservacao" cols="30" rows="3" class="form-control"></textarea>
+                              </div>
+                            </div>
+                          </div>
 		            			</li>
 		          			</ul>
 		        		</div>
