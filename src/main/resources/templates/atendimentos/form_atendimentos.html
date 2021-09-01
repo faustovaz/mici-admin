@@ -8,7 +8,7 @@
         <link rel="stylesheet" th:href="@{/css/CalendarPicker.style.css}">
         <link rel="stylesheet" href='/css/main.css'>
     </head>
-    <body>
+    <body>  
 	    <nav th:replace="fragments/top_menu :: top_menu"></nav>
 	
 	    <header id="main-header" class="py-4 mici-bgcolor text-black">
@@ -75,12 +75,12 @@
 		                				</div>
 		              				</div>
 		              				<div class="row">
-		                				<div class="col d-flex justify-content-end">
-		                  					<div class="mb-3">
-		                  						<span class="me-3">Data do Atendimento</span>
-												<input type="date" class="form-control" name="dataAtendimento" id="dataAtendimento" th:value="${dataAtual}">
-		                  					</div>
-		                				</div>
+                            <div class="col d-flex justify-content-end">
+                              <div class="mb-3">
+                                <label class="form-label" for="dataAtendimento">Data do Atendimento</label>
+                                <input type="date" class="form-control" name="dataAtendimento" id="dataAtendimento" th:value="${dataAtual}">
+                              </div>
+                            </div>
 		              				</div>
 		              				<div class="row">
 		                				<div class="col d-flex justify-content-end">
