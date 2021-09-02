@@ -36,7 +36,7 @@
 			                    	<table class="table table-striped table-hover align-middle table-borderless">
                         				<thead>
                             				<tr>
-                                				<th>Serviço</th>
+                              				<th>Serviço</th>
                             					<th>Preço</th>
                             				</tr>
                         				</thead>
@@ -58,72 +58,107 @@
 		                				<div class="col d-flex justify-content-end">
 		                  					<div class="mb-3">
 		                  						<span class="me-3">Data do Atendimento</span>
-												<input type="date" disabled class="form-control" name="dataAtendimento" id="dataAtendimento" th:value="${atendimento.diaDoAtendimento}">
+												            <input type="date" disabled class="form-control" name="dataAtendimento" id="dataAtendimento" th:value="${atendimento.diaDoAtendimento}">
 		                  					</div>
 		                				</div>
 		              				</div>
-		              				<div class="row">
-		                				<div class="col d-flex justify-content-end">
-		                  					<div class="mb-3">
-		                  						<span class="me-3">É uma cortesia?</span>
-		                  						<input type="radio" id="cortesia_sim" name="cortesia" value="true" th:checked="${atendimento.cortesia}"> Sim
-		                    					<input class="ms-2" type="radio" id="cortesia_nao" name="cortesia" value="false" th:checked="${ not atendimento.cortesia}"> Não
-		                  					</div>
-		                				</div>
-		              				</div>
-		              				<section id="dados-pagamento">
-			              				<div class="row">
-			                				<div class="col d-flex justify-content-end">
-			                  					<div class="mb-3">
-			                    					<input type="checkbox" name="pagamentoRealizado" id="pagamentoRealizado" th:checked="${atendimento.pagamentoRealizado}"> Pagamento realizado
-			                  					</div>
-			                				</div>
-			              				</div>
-	    								<div class="row">
-	  										<div class="col d-flex justify-content-end">
-												<div class="mb-3">
-	  												<label for="nome" class="form-label">Forma de Pagamento</label>
-	  												<select class="form-select" name="formaPgto" id="formaPgto" aria-label="Default select example">
-	  													<option selected value="0">Selecione</option>
-														<option th:each="formaPagamento: ${formasPagamento}" 
-															th:value="${formaPagamento.id}" 
-															th:selected="${atendimento.formaPagamento != null && atendimento.formaPagamento.id == formaPagamento.id}"
-															th:text="${formaPagamento.nome}">
-	  												</select>
-												</div>
-	  										</div>
-	  									</div>
-										<div class="row">
-	                    					<div class="col d-flex justify-content-end">
-	                    						<div class="mb-3">
-                                        			<label for="valorPago" class="form-label">Valor pago</label>
-                                        			<div class="input-group mb-3">
-                                            			<span class="input-group-text">R$</span>
-                                            			<input th:value="${atendimento.valorPago}" type="text" id="valorPago" name="valorPago" class="form-control" required pattern="^[0-9]+[.]?[0-9]+$">
-                                            			<input type="hidden" th:value="${atendimento.valorPago}" id="valorJaPago">
-                                            			<input type="hidden" th:value="${atendimento.valorAtendimento}" id="valorAtendimento">
-                                        			</div>
-	                    						</div>
-	                    					</div>
-	                					</div>	 	  									
-		              				</section>
-									<div class="row">
-                    					<div class="col d-flex justify-content-end">
-	                      					<div class="mb-3">
-	                        					<label for="nome" class="form-label">Observação</label>
-	                    						<textarea 
-	                    							name="atendimentoObservacao" 
-	                    							id="atendimentoObservacao" 
-	                    							cols="30" 
-	                    							rows="3" 
-	                    							class="form-control"
-	                    							th:text="${atendimento.observacao}"></textarea>
-	                      					</div>
-                    					</div>
+                          <div class="row mb-3">
+                            <div class="col d-flex justify-content-end">
+                                <div class="mb-3">
+                                  <span class="me-3">Esse atendimento faz parte de um cronograma?</span>
+                                  <input type="radio" name="cronograma" value="true" th:checked="${atendimento.cronograma}" disabled> Sim
+                                  <input type="radio" name="cronograma" value="false" class="ms-2" th:checked="${not atendimento.cronograma}" disabled> Não
+                                </div>
+                            </div>
+                          </div>     
+                          <div class="row mb-3">
+                            <div class="col d-flex justify-content-end">
+                                <div class="mb-3">
+                                  <span class="me-3">Esse atendimento será cobrado?</span>
+                                  <input type="radio" name="seraCobrado" value="true" th:checked="${atendimento.seraCobrado}" disabled> Sim
+                                  <input type="radio" name="seraCobrado" value="false" class="ms-2" th:checked="${not atendimento.seraCobrado}" disabled> Não
+                                </div>
+                            </div>
+                          </div> 		              		
+                          <section id="dados-pagamento">
+                            <div class="row mb-3">
+                              <div class="col-8 offset-4">
+                                <div class="row mb-3">
+                                  <div class="col">
+                                    <table class="table table-striped table-hover align-middle" th:if="${atendimento.seraCobrado}">
+                                        <thead>
+                                            <tr>
+                                                <th>Data</th>
+                                                <th>Forma de pagamento</th>
+                                                <th>Pagamento</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="pagamento : ${atendimento.pagamentos}">
+                                              <td th:text="${#dates.format(pagamento.diaDoPagamentoAsDate, 'dd/MM/yyyy')}"></td>
+                                              <td th:text="${pagamento.formaPagamento.nome}"></td>
+                                              <td th:text="${#numbers.formatCurrency(pagamento.valorPagamento)}"></td>
+                                            </tr>
+                                            <tr>
+                                              <td colspan="3">
+                                                <div class="d-flex justify-content-end">
+                                                  <p class="badge bg-primary fs-6" th:text="|Pagamento ${#numbers.formatCurrency(atendimento.valorPago)} de ${#numbers.formatCurrency(atendimento.valorAtendimento)}|">
+                                                    Pagamento $60.00 de $100.00
+                                                  </p>
+                                                 </div>
+                                               </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                                <div class="row" th:if="${atendimento.seraCobrado && !atendimento.pagamentoRealizado}">
+                                  <div class="col-4">
+                                    <div class="mb-3">
+                                      <label for="preco" class="form-label">Valor pago</label>
+                                        <div class="input-group">
+                                          <span class="input-group-text" id="price-text">R$</span>
+                                          <input type="text" name="valorPago" class="form-control" value="0.00" required pattern="^[0-9]+[.]?[0-9]+$">
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-4">
+                                    <div class="mb-3">
+                                      <label for="formaPgto" class="form-label">Forma de Pagamento</label>
+                                      <select class="form-select" name="idFormaPgto" id="idFormaPgto" aria-label="Default select example">
+                                        <option selected value="0">Selecione</option>
+                                        <option th:each="formaPagamento: ${formasPagamento}" th:value="${formaPagamento.id}" th:text="${formaPagamento.nome}">
+                                      </select>
+                                    </div>
+                                  </div> 
+                                  <div class="col-4">
+                                    <div class="mb-3">
+                                      <label for="dataPgto" class="form-label">Data do pagamento</label>
+                                        <input type="date" class="form-control" name="dataPgto" id="dataPgto" th:value="${dataAtual}" required>
+                                      </select>
+                                    </div>
+                                  </div>                                       
+                                </div>
+                              </div>                          
+                            </div>
+                          </section>                          		
+        									<div class="row">
+                  					<div class="col d-flex justify-content-end">
+                      					<div class="mb-3">
+                        					<label for="nome" class="form-label">Observação</label>
+                    						<textarea 
+                    							name="atendimentoObservacao" 
+                    							id="atendimentoObservacao" 
+                    							cols="30" 
+                    							rows="3" 
+                    							class="form-control"
+                    							th:text="${atendimento.observacao}"></textarea>
+                      					</div>
+                  					</div>
                 					</div>
-		            			</li>
-		          			</ul>
-		        		</div>
+  		            			</li>
+  		          			</ul>
+  		        		</div>
 		        		<div class="card-footer d-flex justify-content-center">
 		          			<input type="submit" class="btn btn-primary me-3" value="Salvar">
 		      				<a th:href="@{'/atendimentos/listar/' + ${atendimento.cliente.id}}"  class="btn btn-outline-secondary me-3">Cancelar</a>
@@ -135,24 +170,6 @@
 				</form>
 	  		</div>
 		</section>
-	
-		<script>
-			const pgtoRealizado = document.querySelector("#pagamentoRealizado");
-			const valorPago = document.querySelector("#valorPago");
-			const valorJaPago = document.querySelector("#valorJaPago");
-			const valorAtendimento = document.querySelector("#valorAtendimento");
-			
-			pgtoRealizado.addEventListener('click', e => {
-			  	if(e.target.checked){
-					valorPago.value = valorAtendimento.value;
-					valorPago.disabled = true;
-				}
-				else {
-					valorPago.value = valorJaPago.value;
-					valorPago.disabled = false;
-				}
-			});
-		</script>
 		<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 	</body>
 </html>

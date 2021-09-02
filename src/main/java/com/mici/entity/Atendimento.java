@@ -116,8 +116,8 @@ public class Atendimento {
         pagamentos.forEach(pagamento -> this.adicionarPagamentoAtendimento(pagamento));
     }
     
-    public boolean isPago() {
-        return this.valorAtendimento.equals(this.getValorPago());
+    private boolean isPago() {
+        return this.valorAtendimento.compareTo(this.getValorPago()) == 0;
     }
     
     public BigDecimal getValorPago() {

@@ -11,14 +11,24 @@ import lombok.Data;
 @Data
 public class AtendimentoForm {
 	private String idCliente;
+	
 	private List<ServicoForm> servicos;
-	private boolean seraCobrado;
-	private boolean cronograma;
-	private String formaPgto;
-	private String atendimentoObservacao;
+    
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate dataAtendimento;
+    private LocalDate dataAtendimento;
+	
+	private boolean seraCobrado;
+	
+	private boolean cronograma;
+	
+	private Integer idFormaPgto;
+	
 	private BigDecimal valorPago;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate dataPgto;
+	
+	private String atendimentoObservacao;
 }
 
 

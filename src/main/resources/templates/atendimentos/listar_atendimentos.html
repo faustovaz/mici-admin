@@ -32,8 +32,8 @@
                         	<tr>
                             	<th>Nome</th>
                             	<th>Data do atendimento</th>
-                            	<th>Cortesia?</th>
-                            	<th>Pago?</th>
+                            	<th>Foi Cobrado?</th>
+                            	<th>Totalmente Pago?</th>
                             	<th>Valor pago</th>
                             	<th>Total</th>
                             	<th></th>
@@ -43,7 +43,7 @@
 	                        <tr th:each="atendimento : ${atendimentos}">
     	                        <td th:text="${atendimento.cliente.nome}"></td>
         	                    <td th:text="${#dates.format(atendimento.diaDoAtendimentoAsDate, 'dd/MM/yyyy')}"></td>
-            	                <td th:text="${#bools.isTrue(atendimento.cortesia)} ? Sim : Não"></td>
+            	                <td th:text="${#bools.isTrue(atendimento.seraCobrado)} ? Sim : Não"></td>
                 	            <td th:text="${#bools.isTrue(atendimento.pagamentoRealizado)} ? Sim : Não"></td>
                 	            <td th:text="${#numbers.formatCurrency(atendimento.valorPago)}"></td>
                 	            <td th:text="${#numbers.formatCurrency(atendimento.totalAtendimento)}"></td>

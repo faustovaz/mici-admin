@@ -2,6 +2,7 @@ package com.mici.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -47,5 +48,9 @@ public class PagamentoAtendimento {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "dia_do_pagamento")
     private LocalDate diaDoPagamento;
+    
+    public Date getDiaDoPagamentoAsDate() {
+        return java.sql.Date.valueOf(this.getDiaDoPagamento());
+    }
     
 }

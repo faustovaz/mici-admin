@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mici.entity.Atendimento;
 import com.mici.entity.Cliente;
+import com.mici.entity.PagamentoAtendimento;
 import com.mici.form.AtendimentoForm;
 import com.mici.form.tranformer.AtendimentoFormToAtendimento;
 import com.mici.repository.FormaPagamentoRepository;
@@ -84,25 +85,39 @@ public class AtendimentoController {
 	public String editar(@PathVariable("idAtendimento") Integer idAtendimento, Model model){
 		Optional<Atendimento> atendimentoOp = this.service.findById(idAtendimento);
 		model.addAttribute("atendimento", atendimentoOp.get());
+	    model.addAttribute("dataAtual", LocalDate.now());
 		model.addAttribute("formasPagamento", this.formaPagamentoRepository.findAll());
 		return "atendimentos/editar_atendimentos";
 	}
 	
 	
 	@PostMapping("atualizar")
-	public String atualizar(@RequestParam("cortesia") boolean seraCobrado,
-			@RequestParam(required = false, name = "pagamentoRealizado") Boolean pagamentoRealizado,
-			@RequestParam("formaPgto") Integer formaPagamento,
-			@RequestParam(required = false, name = "valorPago") BigDecimal valorPago,
+	public String atualizar(
+	        @RequestParam(required = false, name ="valorPago") BigDecimal valorPago,
+	        @RequestParam(required = false, name = "idFormaPgto") Integer idFormaPgto,
+	        @RequestParam(required = false, name = "dataPgto") String dataPagamento,
 			@RequestParam("atendimentoObservacao") String observacao,
 			@RequestParam("idAtendimento") Integer idAtendimento,
 			Authentication auth) {
 		try {
 			Optional<Atendimento> atendimentoOp = this.service.findById(idAtendimento);
+			
 			if(atendimentoOp.isEmpty())
 				return "404";
+			
 			Atendimento atendimento = atendimentoOp.get();
+			if(atendimento.isSeraCobrado() && !atendimento.isPagamentoRealizado() && valorPago.compareTo(new BigDecimal(0)) > 0) {
+			    var novoPagamento = new PagamentoAtendimento();
+			    novoPagamento.setValorPagamento(valorPago);
+			    novoPagamento.setDiaDoPagamento(LocalDate.parse(dataPagamento));
+			    if (idFormaPgto > 0) {
+			        novoPagamento.setFormaPagamento(formaPagamentoRepository.getById(idFormaPgto));
+			    }
+			    atendimento.adicionarPagamentoAtendimento(novoPagamento);
+			}
+			
 			atendimento.setObservacao(observacao);
+			
 			this.service.salvar(atendimento);
 			return "redirect:/atendimentos/listar/" + atendimento.getCliente().getId();
 		}
