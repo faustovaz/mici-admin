@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <title th:text="#{application.messages.title}">Mi & Ci</title>
+        <link rel="stylesheet" th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.css}">
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+        <link rel="stylesheet" th:href="@{/css/CalendarPicker.style.css}">
+        <link rel="stylesheet" href='/css/main.css'>
+    </head>
+    <body>
+      <nav th:replace="fragments/top_menu :: top_menu"></nav>
+  
+      <header id="main-header" class="py-4 mici-bgcolor text-black">
+          <div class="container">
+              <div class="row">
+                  <div class="col-md-6">
+                      <h4><i class="fa fa-dollar"></i> Pagamentos </h4>
+                  </div>
+              </div>
+          </div>
+      </header>
+  
+    <section id="pagamentos" class="mt-2">
+    <div class="container">
+          <div class="row">
+              <div class="col">
+                <div class="alert alert-secondary" role="alert" th:if="${#lists.isEmpty(relatorio.pagamentos)}" th:text="${messageNaoEncontrado}"></div>
+                  <table class="table table-striped table-hover align-middle" th:if="${not #lists.isEmpty(relatorio.pagamentos)}">
+                      <thead>
+                          <tr>
+                              <th>Cliente</th>
+                              <th>Data do pagamento</th>
+                              <th>Valor pago</th>
+                              <th>Forma de pagamento</th>
+                              <th></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr th:each="pagamento : ${relatorio.pagamentos}">
+                              <td th:text="${pagamento.nomeCliente}"></td>
+                              <td th:text="${#dates.format(pagamento.dataPagamentoAsDate, 'dd/MM/yyyy')}"></td>
+                              <td th:text="${#numbers.formatCurrency(pagamento.valorPagamento)}"></td>
+                              <td th:text="${pagamento.formaPagamento}"></td>
+                              <td class='text-end'>
+                                <a th:href="@{'/atendimentos/editar/' + ${pagamento.idAtendimento}}" class="btn btn-success">
+                                    <i class="fa fa-search"></i>
+                                </a>     
+                              </td> 
+                          </tr>
+                          <tr>
+                            <td colspan="5">
+                              <div class="d-flex justify-content-end">
+                                <p class="badge bg-primary fs-6" th:text="|Total recebido: ${#numbers.formatCurrency(relatorio.valorTotal)}|">
+                                </p>
+                               </div>
+                           </td>                            
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+            </div>
+        </div>
+    </section>
+
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    </body>
+</html>

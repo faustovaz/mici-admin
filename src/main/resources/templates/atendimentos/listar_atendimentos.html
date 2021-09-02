@@ -44,9 +44,17 @@
     	                        <td th:text="${atendimento.cliente.nome}"></td>
         	                    <td th:text="${#dates.format(atendimento.diaDoAtendimentoAsDate, 'dd/MM/yyyy')}"></td>
             	                <td th:text="${#bools.isTrue(atendimento.seraCobrado)} ? Sim : Não"></td>
-                	            <td th:text="${#bools.isTrue(atendimento.pagamentoRealizado)} ? Sim : Não"></td>
-                	            <td th:text="${#numbers.formatCurrency(atendimento.valorPago)}"></td>
-                	            <td th:text="${#numbers.formatCurrency(atendimento.totalAtendimento)}"></td>
+            	                
+                	            <td th:text="${#bools.isTrue(atendimento.pagamentoRealizado)} ? Sim : Não" th:if=${atendimento.seraCobrado}></td>
+                              <td th:if=${!atendimento.seraCobrado}>--</td>
+
+                	            
+                              <td th:text="${#numbers.formatCurrency(atendimento.valorPago)}" th:if=${atendimento.seraCobrado}></td>
+                              <td th:if=${!atendimento.seraCobrado}>--</td>
+
+                              <td th:text="${#numbers.formatCurrency(atendimento.totalAtendimento)}" th:if=${atendimento.seraCobrado}></td>
+                              <td th:if=${!atendimento.seraCobrado}>--</td>
+
                               <td class='text-end'>
                                 <span class="badge bg-warning" th:if="${atendimento.cronograma}">
                                   <i class="fa fa-clock-o"></i>

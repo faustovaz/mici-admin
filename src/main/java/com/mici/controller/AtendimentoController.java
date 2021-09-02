@@ -177,8 +177,8 @@ public class AtendimentoController {
 	
 	@PostMapping("consultar")
 	public String consultar(
-			@RequestParam(required = false, name = "dataInicial") String strDataInicial,
-			@RequestParam(required = false, name = "dataFinal") String strDataFinal,
+			@RequestParam(name = "dataInicial") String strDataInicial,
+			@RequestParam(name = "dataFinal") String strDataFinal,
 			Model model) {
 		var dataInicial = LocalDate.parse(strDataInicial);
 		var dataFinal = LocalDate.parse(strDataFinal);
