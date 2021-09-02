@@ -26,8 +26,8 @@
     			<div class="col-4">
                     <div class="card text-center bg-primary text-white mb-3">
                         <div class="card-body">
-                            <h3>Atendimentos do dia</h3>
-                            <h4 class="display-4" th:text=${dashboard.totalAtendimentosDia}>0</h4>
+                            <h4>Atendimentos do dia</h4>
+                            <h3 th:text=${dashboard.totalAtendimentosDia}>0</h3>
                             <a href="/atendimentos/listar/hoje" class="btn btn-outline-light btn-sm">
                                 Visualizar
                             </a>
@@ -37,8 +37,8 @@
     			<div class="col-4">
                     <div class="card text-center bg-success text-white mb-3">
                         <div class="card-body">
-                            <h3>Atendimentos da semana</h3>
-                            <h4 class="display-4" th:text=${dashboard.totalAtendimentosSemana}>0</h4>
+                            <h4>Atendimentos da semana</h4>
+                            <h3 th:text=${dashboard.totalAtendimentosSemana}>0</h3>
                             <a href="/atendimentos/consultar" class="btn btn-outline-light btn-sm">
                                 Visualizar
                             </a>
@@ -48,8 +48,8 @@
     			<div class="col-4">
                     <div class="card text-center bg-warning text-white mb-3">
                         <div class="card-body">
-                            <h3>Total de atendimentos</h3>
-                            <h4 class="display-4" th:text=${dashboard.totalAtendimentos}>0</h4>
+                            <h4>Total de atendimentos</h4>
+                            <h3 th:text=${dashboard.totalAtendimentos}>0</h3>
                             <a href="/atendimentos/consultar" class="btn btn-outline-light btn-sm">
                                 Visualizar
                             </a>
