@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class AtendimentoForm {
 	private String idCliente;
-	
+
 	private List<ServicoForm> servicos;
     
 	@DateTimeFormat(pattern = "yyyy-MM-dd")

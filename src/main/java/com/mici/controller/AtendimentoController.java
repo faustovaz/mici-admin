@@ -5,9 +5,13 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -84,6 +88,10 @@ public class AtendimentoController {
 	@GetMapping("editar/{idAtendimento}")
 	public String editar(@PathVariable("idAtendimento") Integer idAtendimento, Model model){
 		Optional<Atendimento> atendimentoOp = this.service.findById(idAtendimento);
+		
+		if(atendimentoOp.isEmpty())
+		    return "404";
+		
 		model.addAttribute("atendimento", atendimentoOp.get());
 	    model.addAttribute("dataAtual", LocalDate.now());
 		model.addAttribute("formasPagamento", this.formaPagamentoRepository.findAll());
@@ -179,5 +187,32 @@ public class AtendimentoController {
 		model.addAttribute("dataFinal", dataFinal);
 		model.addAttribute("atendimentos", atendimentos);
 		return "atendimentos/consultar_atendimentos";
+	}
+	
+	@ExceptionHandler({BindException.class})
+	public String handler(HttpServletRequest r, BindException e, Model model) {
+	    String uri = r.getRequestURI();
+	    if ("/atendimentos/cadastrar".equals(uri)) {
+	        var idCliente = r.getParameter("idCliente");
+	        model.addAttribute("cliente", this.clienteService.findById(Integer.valueOf(idCliente)));
+	        model.addAttribute("servicos", this.servicoService.findAll());
+	        model.addAttribute("formasPagamento", this.formaPagamentoRepository.findAll());
+	        model.addAttribute("dataAtual", LocalDate.now());
+	        model.addAttribute("mensagemErro", 
+	                    "Por favor, preencha todos os corretamente. Atenção ao selecionar os serviços prestados.");
+	        return "atendimentos/form_atendimentos";
+	    }
+	    
+	    if("/atendimentos/atualizar".equals(uri)) {
+	        var idAtendimento = r.getParameter("idAtendimento");
+	        Optional<Atendimento> atendimentoOp = this.service.findById(Integer.valueOf(idAtendimento));
+	        model.addAttribute("atendimento", atendimentoOp.get());
+	        model.addAttribute("dataAtual", LocalDate.now());
+	        model.addAttribute("formasPagamento", this.formaPagamentoRepository.findAll());
+            model.addAttribute("mensagemErro", "Por favor, preencha todos os corretamente.");	        
+	        return "atendimentos/editar_atendimentos";
+	    }
+	    
+	    return "500";
 	}
 }
