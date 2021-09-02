@@ -117,7 +117,7 @@ public class Atendimento {
     }
     
     private boolean isPago() {
-        return this.valorAtendimento.compareTo(this.getValorPago()) == 0;
+        return this.getValorPago().compareTo(this.valorAtendimento) >= 0;
     }
     
     public BigDecimal getValorPago() {

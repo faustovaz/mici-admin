@@ -69,4 +69,10 @@ public class ClientesController {
 		model.addAttribute("termo_busca", busca);
 		return "clientes/listar_clientes";
 	}
+	
+	@GetMapping("listar/debito")
+	public String buscarClientesEmDebito(Model model){
+	    model.addAttribute("relatorio", this.service.getAllClientesEmDebito());
+	    return "clientes/listar_clientes_em_debito.html";
+	}
 }

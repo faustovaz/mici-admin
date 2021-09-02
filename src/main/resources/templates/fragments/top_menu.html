@@ -77,14 +77,24 @@
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-user"></i> Clientes
                         </a>
-                        <div class="dropdown-menu">
-                        	<a href="/clientes/form" class="dropdown-item">
-                        		<i class="fa fa-pencil"></i> Cadastrar
-                        	</a>
-                        	<a href="/clientes/listar" class="dropdown-item">
-                        		<i class="fa fa-search"></i> Consultar
-                        	</a>                        	
-                        </div>
+                        <ul class="dropdown-menu">
+                          <li>
+                          	<a href="/clientes/form" class="dropdown-item">
+                          		<i class="fa fa-pencil"></i> Cadastrar
+                          	</a>
+                        	</li>
+                        	<li>
+                          	<a href="/clientes/listar" class="dropdown-item">
+                          		<i class="fa fa-search"></i> Consultar
+                          	</a>
+                        	</li>        
+                          <li><hr class="dropdown-divider"></li>   
+                          <li>
+                            <a href="/clientes/listar/debito" class="dropdown-item">
+                              <i class="fa fa-money"></i> Verificar débitos
+                            </a>
+                          </li>
+                        </ul>
                     </li>
                     <li class="nav-item dropdown pe-5">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -108,21 +118,21 @@
 	                            <a th:href="@{/password/alterar}" class="dropdown-item">
 	                                <i class="fa fa-lock"></i> Alterar senha
 	                            </a>
-                            </li>
-							<li><hr class="dropdown-divider"></li>   
-							<li>          
-								<div class="dropdown-item">
-									<form th:action="@{/logout}" method="post">
-									 	<i class="fa fa-sign-out"></i>
-										<input type="submit" class="btn btn-light" value="Sair">
-	                            	</form>
-								</div>               
-                            </li>
-                        </ul>                    
-                    </li>
-                </ul>
-            </div>
-        </div>
+                          </li>
+						              <li><hr class="dropdown-divider"></li>   
+							           <li>          
+								          <div class="dropdown-item">
+								            <form th:action="@{/logout}" method="post">
+								 	            <i class="fa fa-sign-out"></i>
+										          <input type="submit" class="btn btn-light" value="Sair">
+                            </form>
+								          </div>               
+                        </li>
+                      </ul>                    
+                  </li>
+              </ul>
+          </div>
+      </div>
     </nav>
 
     <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>

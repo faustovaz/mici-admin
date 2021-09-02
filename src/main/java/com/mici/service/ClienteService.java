@@ -11,15 +11,18 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.mici.entity.Cliente;
+import com.mici.entity.dto.RelatorioClientesEmDebitoDTO;
 import com.mici.repository.ClienteRepository;
 
 @Service
 public class ClienteService {
 
 	private  ClienteRepository repository;
+	private AtendimentoService atendimentoService;
 
-	public ClienteService(ClienteRepository repository) {
+	public ClienteService(ClienteRepository repository, AtendimentoService atendimentoService) {
 		this.repository = repository;
+		this.atendimentoService = atendimentoService;
 	}
 	
 	public Cliente save(Cliente cliente) {
@@ -66,6 +69,10 @@ public class ClienteService {
 	public List<Cliente> getAniversariantesDoMesAtual() {
 		var hoje = LocalDate.now();
 		return repository.getAniversariantesDoMes(hoje.getMonthValue());
+	}
+	
+	public RelatorioClientesEmDebitoDTO getAllClientesEmDebito() {
+	    return new RelatorioClientesEmDebitoDTO(this.atendimentoService.findAllNaoPagos());
 	}
 	
 }
