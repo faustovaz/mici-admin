@@ -47,17 +47,20 @@
                 	            <td th:text="${#bools.isTrue(atendimento.pagamentoRealizado)} ? Sim : Não"></td>
                 	            <td th:text="${#numbers.formatCurrency(atendimento.valorPago)}"></td>
                 	            <td th:text="${#numbers.formatCurrency(atendimento.totalAtendimento)}"></td>
-                    	        <td class='text-end'>
+                              <td class='text-end'>
+                                <span class="badge bg-warning" th:if="${atendimento.cronograma}">
+                                  <i class="fa fa-clock-o"></i>
+                                </span>
                                 <button type="button" class="btn btn-primary"
                                   data-bs-toggle="tooltip"
                                   data-bs-placement="left"
                                   th:title="${atendimento.observacao}">
                                   <i class="fa fa-file-text-o"></i>
-                                </button>                    	        
-     	                       		<a th:href="@{'/atendimentos/editar/' + ${atendimento.id}}" class="btn btn-success">
-                                  	<i class="fa fa-search"></i>
-                              	</a>     
-                            	</td>	
+                                </button>                             
+                                <a th:href="@{'/atendimentos/editar/' + ${atendimento.id}}" class="btn btn-success">
+                                    <i class="fa fa-search"></i>
+                                </a>     
+                              </td> 
                         	</tr>
                     	</tbody>
                 	</table>
