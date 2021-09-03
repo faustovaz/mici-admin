@@ -42,7 +42,7 @@ class AtendimentoServiceTest {
 	ClienteService clienteService;
 	
 	void cleanTables() {
-	    jdbcTemplate.execute("delete from clilentes");
+	    jdbcTemplate.execute("delete from clientes");
 		jdbcTemplate.execute("DELETE FROM servicos");
 		jdbcTemplate.execute("DELETE FROM atendimentos");
 		jdbcTemplate.execute("DELETE FROM itens_atendimento");		
