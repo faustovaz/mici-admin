@@ -21,6 +21,11 @@ public class ClienteBuilder {
 		return this;
 	}
 	
+	public ClienteBuilder dataNascimento(LocalDate data) {
+	    this.cliente.setDataNascimento(data);
+	    return this;
+	}
+	
 	public ClienteBuilder anyTelefone() {
 		this.cliente.setTelefone("any");
 		return this;
