@@ -55,4 +55,25 @@ class AgendamentoServiceTest {
 		assertThat(agendamentoService.getTodosDoDia(dia29)).hasAtLeastOneElementOfType(Agendamento.class);
 	}
 	
+	
+	@Test
+	void deveRemoverPorCompletoAgendamentosDoDia() {
+	    var hoje = LocalDate.now();
+	    
+	    List<Agendamento> agendamentos = List.of(
+            Agendamento.from(faker.name().firstName(), faker.lorem().word(), hoje.toString(), "09:00"),
+            Agendamento.from(faker.name().firstName(), faker.lorem().word(), hoje.toString(), "09:30"),
+            Agendamento.from(faker.name().firstName(), faker.lorem().word(), hoje.toString(), "10:00"),
+            Agendamento.from(faker.name().firstName(), faker.lorem().word(), hoje.toString(), "11:00"),
+            Agendamento.from(faker.name().firstName(), faker.lorem().word(), hoje.toString(), "14:00"),
+            Agendamento.from(faker.name().firstName(), faker.lorem().word(), hoje.toString(), "16:00")
+        );
+	
+	    agendamentos.forEach(agendamento -> agendamentoService.agendar(agendamento));
+	    assertThat(agendamentoService.getTodosDoDia(hoje).size()).isEqualTo(6);
+	    
+	    agendamentos.forEach(agendamento -> agendamentoService.deleteById(agendamento.getId()));
+	    assertThat(agendamentoService.getTodosDoDia(hoje)).isEmpty();
+	}
+	
 }
