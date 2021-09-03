@@ -141,6 +141,11 @@ public class AtendimentoBuilder  {
            this.atendimentoBuilder.addPagamentoAtendimento(pagamentoAtendimento);   
            return this.atendimentoBuilder;
        }
+
+        public PagamentoAtendimentoBuilder pagoEm(LocalDate dia) {
+            this.pagamentoAtendimento.setDiaDoPagamento(dia);
+            return this;
+        }
 	    
 	}
 }
