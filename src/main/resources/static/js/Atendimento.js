@@ -181,21 +181,21 @@ class Atendimentos {
 
   
   updateServicosIds() {
-	let id = 0;
-	const servicosElements = Array.from(document.querySelectorAll("[data-container]"));
-	servicosElements.forEach(s => {
-		s.setAttribute('data-container', `container-${id}`);
-		let select = s.querySelector('select');
-		let valorAplicado = s.querySelector('[data-type=valor-aplicado]');
-		let valorPadrao = s.querySelector('[data-type=valor-padrao]');
-		select.id =   `servicos[${id}][tipoServico]`;
-		select.name = `servicos[${id}][tipoServico]`;
-		valorAplicado.id =   `servicos[${id}][valorAplicado]`;
-		valorAplicado.name = `servicos[${id}][valorAplicado]`;
-		valorPadrao.id =   `servicos[${id}][valorPadrao]`;
-		valorPadrao.name = `servicos[${id}][valorPadrao]`;
-		id = id + 1;
-	});
+  	let id = 0;
+  	const servicosElements = Array.from(document.querySelectorAll("[data-container]"));
+  	servicosElements.forEach(s => {
+  		s.setAttribute('data-container', `container-${id}`);
+  		let select = s.querySelector('select');
+  		let valorAplicado = s.querySelector('[data-type=valor-aplicado]');
+  		let valorPadrao = s.querySelector('[data-type=valor-padrao]');
+  		select.id =   `servicos[${id}].tipoServico`;
+  		select.name = `servicos[${id}].tipoServico`;
+  		valorAplicado.id =   `servicos[${id}].valorAplicado`;
+  		valorAplicado.name = `servicos[${id}].valorAplicado`;
+  		valorPadrao.id =   `servicos[${id}].valorPadrao`;
+  		valorPadrao.name = `servicos[${id}].valorPadrao`;
+  		id = id + 1;
+  	});
   }
     
   
