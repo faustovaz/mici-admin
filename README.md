@@ -6,7 +6,8 @@ Powered by SpringBoot, Thymeleaf, Bootstrap and SQLite.
 To run the app: \
 `$ ./gradlew bootRun`
 
-Default user: \
+---
+**Default user:** \
 user: admin \
 password: admin
 
