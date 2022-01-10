@@ -1,5 +1,5 @@
 # MiCi-Admin
-## Small webapp for small beauty shop admin
+## WEB app for small beauty shop admin
 
 Powered by SpringBoot, Thymeleaf, Bootstrap and SQLite.
 
